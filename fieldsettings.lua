@@ -13,9 +13,9 @@ FieldSettings:include(Stringifiable)
 -- @table instance
 -- @tfield lualife.models.Size size
 -- @tfield lualife.models.Point initial_offset
--- @tfield number filling
--- @tfield int minimal_count
--- @tfield int maximal_count
+-- @tfield number filling [0, 1]
+-- @tfield int minimal_count [0, size.width * size.height]
+-- @tfield int maximal_count [minimal_count, ∞)
 
 ---
 -- @function new
