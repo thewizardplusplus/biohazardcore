@@ -50,3 +50,17 @@ function TestFieldSettings.test_new_partial()
   luaunit.assert_is_number(settings.maximal_count)
   luaunit.assert_equals(settings.maximal_count, math.huge)
 end
+
+function TestFieldSettings.test_tostring()
+  local settings = FieldSettings:new(Size:new(5, 12), Point:new(23, 42), 0.1, 2, 3)
+  local text = tostring(settings)
+
+  luaunit.assert_is_string(text)
+  luaunit.assert_equals(text, "{" ..
+    "size = {height = 12,width = 5}," ..
+    "initial_offset = {x = 23,y = 42}," ..
+    "filling = 0.1," ..
+    "minimal_count = 2," ..
+    "maximal_count = 3" ..
+  "}")
+end
