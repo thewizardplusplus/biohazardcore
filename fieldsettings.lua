@@ -40,9 +40,7 @@ function FieldSettings:initialize(
   assert(size.isInstanceOf and size:isInstanceOf(Size))
   assert(initial_offset.isInstanceOf and initial_offset:isInstanceOf(Point))
   assert(type(filling) == "number" and filling >= 0 and filling <= 1)
-
-  local size = size.width * size.height
-  assert(type(minimal_count) == "number" and minimal_count >= 0 and minimal_count <= size)
+  assert(type(minimal_count) == "number" and minimal_count >= 0 and minimal_count <= size.width * size.height)
   assert(type(maximal_count) == "number" and maximal_count >= minimal_count)
 
   self.size = size
@@ -58,9 +56,9 @@ function FieldSettings:__data()
   return {
     size = self.size:__data(),
     initial_offset = self.initial_offset:__data(),
-    filling = filling,
-    minimal_count = minimal_count,
-    maximal_count = maximal_count,
+    filling = self.filling,
+    minimal_count = self.minimal_count,
+    maximal_count = self.maximal_count,
   }
 end
 

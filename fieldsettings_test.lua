@@ -39,7 +39,7 @@ function TestFieldSettings.test_new_partial()
   luaunit.assert_is(settings.size, size)
 
   luaunit.assert_true(settings.initial_offset:isInstanceOf(Point))
-  luaunit.assert_is(settings.initial_offset, Point:new(0, 0))
+  luaunit.assert_equals(settings.initial_offset, Point:new(0, 0))
 
   luaunit.assert_is_number(settings.filling)
   luaunit.assert_equals(settings.filling, 0.5)
@@ -57,10 +57,10 @@ function TestFieldSettings.test_tostring()
 
   luaunit.assert_is_string(text)
   luaunit.assert_equals(text, "{" ..
-    "size = {height = 12,width = 5}," ..
-    "initial_offset = {x = 23,y = 42}," ..
     "filling = 0.1," ..
+    "initial_offset = {x = 23,y = 42}," ..
+    "maximal_count = 3," ..
     "minimal_count = 2," ..
-    "maximal_count = 3" ..
+    "size = {height = 12,width = 5}" ..
   "}")
 end
