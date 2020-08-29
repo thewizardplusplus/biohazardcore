@@ -2,6 +2,7 @@
 -- @classmod FieldSettings
 
 local middleclass = require("middleclass")
+local types = require("lualife.types")
 local Stringifiable = require("lualife.models.stringifiable")
 local Size = require("lualife.models.size")
 local Point = require("lualife.models.point")
@@ -37,11 +38,11 @@ function FieldSettings:initialize(
   minimal_count = minimal_count or 0
   maximal_count = maximal_count or math.huge
 
-  assert(size.isInstanceOf and size:isInstanceOf(Size))
-  assert(initial_offset.isInstanceOf and initial_offset:isInstanceOf(Point))
-  assert(type(filling) == "number" and filling >= 0 and filling <= 1)
-  assert(type(minimal_count) == "number" and minimal_count >= 0 and minimal_count <= size.width * size.height)
-  assert(type(maximal_count) == "number" and maximal_count >= minimal_count)
+  assert(types.is_instance(size, Size))
+  assert(types.is_instance(initial_offset, Point))
+  assert(types.is_number_with_limits(filling, 0, 1))
+  assert(types.is_number_with_limits(minimal_count, 0, size.width * size.height))
+  assert(types.is_number_with_limits(maximal_count, minimal_count))
 
   self.size = size
   self.initial_offset = initial_offset
