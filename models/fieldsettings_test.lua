@@ -1,7 +1,7 @@
 local luaunit = require("luaunit")
 local Size = require("lualife.models.size")
 local Point = require("lualife.models.point")
-local FieldSettings = require("biohazardcore.fieldsettings")
+local FieldSettings = require("biohazardcore.models.fieldsettings")
 
 -- luacheck: globals TestFieldSettings
 TestFieldSettings = {}

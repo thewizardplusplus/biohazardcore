@@ -1,8 +1,8 @@
 local luaunit = require("luaunit")
 
 for _, module in ipairs({
-  "fieldsettings",
-  "gamesettings",
+  "models.fieldsettings",
+  "models.gamesettings",
 }) do
   require("biohazardcore." .. module .. "_test")
 end

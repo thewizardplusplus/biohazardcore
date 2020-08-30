@@ -4,7 +4,7 @@
 local middleclass = require("middleclass")
 local types = require("lualife.types")
 local Stringifiable = require("lualife.models.stringifiable")
-local FieldSettings = require("biohazardcore.fieldsettings")
+local FieldSettings = require("biohazardcore.models.fieldsettings")
 
 local GameSettings = middleclass("GameSettings")
 GameSettings:include(Stringifiable)
