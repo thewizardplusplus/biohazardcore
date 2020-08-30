@@ -1,4 +1,5 @@
 local luaunit = require("luaunit")
+local types = require("lualife.types")
 local Size = require("lualife.models.size")
 local Point = require("lualife.models.point")
 local FieldSettings = require("biohazardcore.models.fieldsettings")
@@ -12,19 +13,20 @@ function TestGameSettings.test_new()
   local field_part_settings = FieldSettings:new(Size:new(6, 13), Point:new(24, 43), 0.2, 10, 100)
   local settings = GameSettings:new(field_settings, field_part_settings)
 
-  luaunit.assert_true(settings.isInstanceOf and settings:isInstanceOf(GameSettings))
+  luaunit.assert_true(types.is_instance(settings, GameSettings))
 
-  luaunit.assert_true(settings.field:isInstanceOf(FieldSettings))
+  luaunit.assert_true(types.is_instance(settings.field, FieldSettings))
   luaunit.assert_is(settings.field, field_settings)
 
-  luaunit.assert_true(settings.field_part:isInstanceOf(FieldSettings))
+  luaunit.assert_true(types.is_instance(settings.field_part, FieldSettings))
   luaunit.assert_is(settings.field_part, field_part_settings)
 end
 
 function TestGameSettings.test_tostring()
-  local field_settings = FieldSettings:new(Size:new(5, 12), Point:new(23, 42), 0.1, 2, 3)
-  local field_part_settings = FieldSettings:new(Size:new(6, 13), Point:new(24, 43), 0.2, 10, 100)
-  local settings = GameSettings:new(field_settings, field_part_settings)
+  local settings = GameSettings:new(
+    FieldSettings:new(Size:new(5, 12), Point:new(23, 42), 0.1, 2, 3),
+    FieldSettings:new(Size:new(6, 13), Point:new(24, 43), 0.2, 10, 100)
+  )
   local text = tostring(settings)
 
   luaunit.assert_is_string(text)

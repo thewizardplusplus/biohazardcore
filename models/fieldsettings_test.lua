@@ -1,4 +1,5 @@
 local luaunit = require("luaunit")
+local types = require("lualife.types")
 local Size = require("lualife.models.size")
 local Point = require("lualife.models.point")
 local FieldSettings = require("biohazardcore.models.fieldsettings")
@@ -11,12 +12,12 @@ function TestFieldSettings.test_new_full()
   local initial_offset = Point:new(23, 42)
   local settings = FieldSettings:new(size, initial_offset, 0.1, 2, 3)
 
-  luaunit.assert_true(settings.isInstanceOf and settings:isInstanceOf(FieldSettings))
+  luaunit.assert_true(types.is_instance(settings, FieldSettings))
 
-  luaunit.assert_true(settings.size:isInstanceOf(Size))
+  luaunit.assert_true(types.is_instance(settings.size, Size))
   luaunit.assert_is(settings.size, size)
 
-  luaunit.assert_true(settings.initial_offset:isInstanceOf(Point))
+  luaunit.assert_true(types.is_instance(settings.initial_offset, Point))
   luaunit.assert_is(settings.initial_offset, initial_offset)
 
   luaunit.assert_is_number(settings.filling)
@@ -33,12 +34,12 @@ function TestFieldSettings.test_new_partial()
   local size = Size:new(5, 12)
   local settings = FieldSettings:new(size)
 
-  luaunit.assert_true(settings.isInstanceOf and settings:isInstanceOf(FieldSettings))
+  luaunit.assert_true(types.is_instance(settings, FieldSettings))
 
-  luaunit.assert_true(settings.size:isInstanceOf(Size))
+  luaunit.assert_true(types.is_instance(settings.size, Size))
   luaunit.assert_is(settings.size, size)
 
-  luaunit.assert_true(settings.initial_offset:isInstanceOf(Point))
+  luaunit.assert_true(types.is_instance(settings.initial_offset, Point))
   luaunit.assert_equals(settings.initial_offset, Point:new(0, 0))
 
   luaunit.assert_is_number(settings.filling)
