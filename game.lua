@@ -3,10 +3,12 @@
 
 local middleclass = require("middleclass")
 local types = require("lualife.types")
+local Point = require("lualife.models.point")
 local Field = require("lualife.models.field")
 local PlacedField = require("lualife.models.placedfield")
 local GameSettings = require("biohazardcore.models.gamesettings")
 local random = require("lualife.random")
+local matrix = require("lualife.matrix")
 
 local Game = middleclass("Game")
 
@@ -58,6 +60,10 @@ function Game:move(delta_offset)
   if field_part_next:fits(self._field) then
     self._field_part = field_part_next
   end
+end
+
+function Game:rotate()
+  self._field_part = matrix.rotate(self._field_part)
 end
 
 return Game
