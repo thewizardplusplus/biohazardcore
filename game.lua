@@ -29,7 +29,7 @@ function Game:initialize(settings)
 
   self._settings = settings
 
-  local field_part_sample = PlacedField:new(
+  local field_sample = PlacedField:new(
     settings.field.size,
     settings.field.initial_offset
   )
