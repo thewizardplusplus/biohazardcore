@@ -1,6 +1,7 @@
 local luaunit = require("luaunit")
 
 for _, module in ipairs({
+  "factory",
   "models.fieldsettings",
   "models.gamesettings",
 }) do
