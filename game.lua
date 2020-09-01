@@ -4,6 +4,7 @@
 local middleclass = require("middleclass")
 local types = require("lualife.types")
 local Point = require("lualife.models.point")
+local PlacedField = require("lualife.models.placedfield")
 local GameSettings = require("biohazardcore.models.gamesettings")
 local sets = require("lualife.sets")
 local matrix = require("lualife.matrix")

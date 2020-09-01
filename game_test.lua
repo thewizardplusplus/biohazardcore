@@ -53,3 +53,49 @@ function TestGame.test_new()
   luaunit.assert_true(types.is_instance(game._field_part, PlacedField))
   luaunit.assert_equals(game._field_part, want_field_part)
 end
+
+function TestGame.test_move_success()
+  local settings = GameSettings:new(
+    FieldSettings:new(Size:new(10, 10)),
+    FieldSettings:new(Size:new(3, 3), Point:new(6, 6), 1)
+  )
+  local game = Game:new(settings)
+  game:move(Point:new(1, 1))
+
+  local want_field_part = PlacedField:new(Size:new(3, 3), Point:new(7, 7))
+  want_field_part:set(Point:new(7, 7))
+  want_field_part:set(Point:new(8, 7))
+  want_field_part:set(Point:new(9, 7))
+  want_field_part:set(Point:new(7, 8))
+  want_field_part:set(Point:new(8, 8))
+  want_field_part:set(Point:new(9, 8))
+  want_field_part:set(Point:new(7, 9))
+  want_field_part:set(Point:new(8, 9))
+  want_field_part:set(Point:new(9, 9))
+
+  luaunit.assert_true(types.is_instance(game._field_part, PlacedField))
+  luaunit.assert_equals(game._field_part, want_field_part)
+end
+
+function TestGame.test_move_failure()
+  local settings = GameSettings:new(
+    FieldSettings:new(Size:new(10, 10)),
+    FieldSettings:new(Size:new(3, 3), Point:new(6, 6), 1)
+  )
+  local game = Game:new(settings)
+  game:move(Point:new(2, 2))
+
+  local want_field_part = PlacedField:new(Size:new(3, 3), Point:new(6, 6))
+  want_field_part:set(Point:new(6, 6))
+  want_field_part:set(Point:new(7, 6))
+  want_field_part:set(Point:new(8, 6))
+  want_field_part:set(Point:new(6, 7))
+  want_field_part:set(Point:new(7, 7))
+  want_field_part:set(Point:new(8, 7))
+  want_field_part:set(Point:new(6, 8))
+  want_field_part:set(Point:new(7, 8))
+  want_field_part:set(Point:new(8, 8))
+
+  luaunit.assert_true(types.is_instance(game._field_part, PlacedField))
+  luaunit.assert_equals(game._field_part, want_field_part)
+end
