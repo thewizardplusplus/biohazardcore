@@ -99,3 +99,32 @@ function TestGame.test_move_failure()
   luaunit.assert_true(types.is_instance(game._field_part, PlacedField))
   luaunit.assert_equals(game._field_part, want_field_part)
 end
+
+function TestGame.test_rotate()
+  local settings = GameSettings:new(
+    FieldSettings:new(Size:new(10, 10)),
+    FieldSettings:new(Size:new(3, 3))
+  )
+  local game = Game:new(settings)
+
+  game._field_part = PlacedField:new(Size:new(3, 3))
+  game._field_part:set(Point:new(0, 0))
+  game._field_part:set(Point:new(1, 0))
+  game._field_part:set(Point:new(2, 0))
+  game._field_part:set(Point:new(0, 1))
+  game._field_part:set(Point:new(1, 1))
+  game._field_part:set(Point:new(0, 2))
+
+  game:rotate()
+
+  local want_field_part = PlacedField:new(Size:new(3, 3))
+  want_field_part:set(Point:new(0, 0))
+  want_field_part:set(Point:new(1, 0))
+  want_field_part:set(Point:new(2, 0))
+  want_field_part:set(Point:new(1, 1))
+  want_field_part:set(Point:new(2, 1))
+  want_field_part:set(Point:new(2, 2))
+
+  luaunit.assert_true(types.is_instance(game._field_part, PlacedField))
+  luaunit.assert_equals(game._field_part, want_field_part)
+end
