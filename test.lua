@@ -2,6 +2,7 @@ local luaunit = require("luaunit")
 
 for _, module in ipairs({
   "factory",
+  "game",
   "models.fieldsettings",
   "models.gamesettings",
 }) do
