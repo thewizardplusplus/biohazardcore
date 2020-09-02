@@ -41,7 +41,11 @@ function FieldSettings:initialize(
   assert(types.is_instance(size, Size))
   assert(types.is_instance(initial_offset, Point))
   assert(types.is_number_with_limits(filling, 0, 1))
-  assert(types.is_number_with_limits(minimal_count, 0, size.width * size.height))
+  assert(types.is_number_with_limits(
+    minimal_count,
+    0,
+    size.width * size.height
+  ))
   assert(types.is_number_with_limits(maximal_count, minimal_count))
 
   self.size = size

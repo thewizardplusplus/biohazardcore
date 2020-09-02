@@ -12,7 +12,8 @@ TestFactory = {}
 function TestFactory.test_neighbors()
   math.randomseed(1)
 
-  local settings = FieldSettings:new(Size:new(5, 12), Point:new(23, 42), 0.1, 2, 3)
+  local settings =
+    FieldSettings:new(Size:new(5, 12), Point:new(23, 42), 0.1, 2, 3)
   local field = factory.create_field(settings)
 
   luaunit.assert_true(types.is_instance(field, PlacedField))

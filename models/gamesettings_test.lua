@@ -9,8 +9,10 @@ local GameSettings = require("biohazardcore.models.gamesettings")
 TestGameSettings = {}
 
 function TestGameSettings.test_new()
-  local field_settings = FieldSettings:new(Size:new(5, 12), Point:new(23, 42), 0.1, 2, 3)
-  local field_part_settings = FieldSettings:new(Size:new(6, 13), Point:new(24, 43), 0.2, 10, 100)
+  local field_settings =
+    FieldSettings:new(Size:new(5, 12), Point:new(23, 42), 0.1, 2, 3)
+  local field_part_settings =
+    FieldSettings:new(Size:new(6, 13), Point:new(24, 43), 0.2, 10, 100)
   local settings = GameSettings:new(field_settings, field_part_settings)
 
   luaunit.assert_true(types.is_instance(settings, GameSettings))

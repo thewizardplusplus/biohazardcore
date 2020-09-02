@@ -37,7 +37,8 @@ function Game:move(delta_offset)
   assert(types.is_instance(delta_offset, Point))
 
   local field_part_offset_next = self._field_part.offset:translate(delta_offset)
-  local field_part_next = PlacedField.place(self._field_part, field_part_offset_next)
+  local field_part_next =
+    PlacedField.place(self._field_part, field_part_offset_next)
   if field_part_next:fits(self._field) then
     self._field_part = field_part_next
   end
@@ -52,7 +53,8 @@ end
 ---
 -- @function union
 function Game:union()
-  local intersected_field_part = sets.intersection(self._field, self._field_part)
+  local intersected_field_part =
+    sets.intersection(self._field, self._field_part)
   if intersected_field_part:count() ~= 0 then
     return
   end
