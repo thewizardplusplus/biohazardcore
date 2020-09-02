@@ -16,7 +16,7 @@ local Game = middleclass("Game")
 ---
 -- @table instance
 -- @tfield GameSettings _settings
--- @tfield lualife.models.Field _field
+-- @tfield lualife.models.PlacedField _field
 -- @tfield lualife.models.PlacedField _field_part
 
 ---
@@ -32,7 +32,7 @@ function Game:initialize(settings)
 end
 
 ---
--- @tparam Point delta_offset
+-- @tparam lualife.models.Point delta_offset
 function Game:move(delta_offset)
   assert(types.is_instance(delta_offset, Point))
 
@@ -43,10 +43,14 @@ function Game:move(delta_offset)
   end
 end
 
+---
+-- @function rotate
 function Game:rotate()
   self._field_part = matrix.rotate(self._field_part)
 end
 
+---
+-- @function union
 function Game:union()
   local intersected_field_part = sets.intersection(self._field, self._field_part)
   if intersected_field_part:count() ~= 0 then

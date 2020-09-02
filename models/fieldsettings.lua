@@ -20,8 +20,8 @@ FieldSettings:include(Stringifiable)
 
 ---
 -- @function new
--- @tparam Size size
--- @tparam[opt=(0 0)] Point initial_offset
+-- @tparam lualife.models.Size size
+-- @tparam[opt=(0 0)] lualife.models.Point initial_offset
 -- @tparam[optchain=0.5] number filling [0, 1]
 -- @tparam[optchain=0] int minimal_count [0, size.width * size.height]
 -- @tparam[optchain=math.huge] int maximal_count [minimal_count, ∞)
@@ -66,6 +66,5 @@ end
 ---
 -- @function __tostring
 -- @treturn string stringified table with instance fields
--- @see lualife.models.Stringifiable
 
 return FieldSettings

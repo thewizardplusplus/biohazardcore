@@ -39,6 +39,5 @@ end
 ---
 -- @function __tostring
 -- @treturn string stringified table with instance fields
--- @see lualife.models.Stringifiable
 
 return GameSettings

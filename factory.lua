@@ -10,7 +10,7 @@ local factory = {}
 
 ---
 -- @tparam FieldSettings settings
--- @treturn PlacedField
+-- @treturn lualife.models.PlacedField
 function factory.create_field(settings)
   assert(types.is_instance(settings, FieldSettings))
 
