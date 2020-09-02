@@ -57,7 +57,7 @@ function Game:union()
   field_next = life.populate(field_next)
 
   self._field = field_next
-  self._field_part = factory.create_field(settings.field_part)
+  self._field_part = factory.create_field(self._settings.field_part)
 end
 
 return Game
