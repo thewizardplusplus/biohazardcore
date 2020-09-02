@@ -1,7 +1,5 @@
-local types = require("lualife.types")
 local Size = require("lualife.models.size")
 local Point = require("lualife.models.point")
-local PlacedField = require("lualife.models.placedfield")
 local FieldSettings = require("biohazardcore.models.fieldsettings")
 local GameSettings = require("biohazardcore.models.gamesettings")
 local Game = require("biohazardcore.game")
@@ -17,22 +15,27 @@ math.randomseed(os.time())
 local counter = 0
 repeat
   local action = math.floor(5 * math.random())
+  local action_description
   if action == 0 then
+    action_description = "move left"
     game:move(Point:new(-1, 0))
   elseif action == 1 then
+    action_description = "move right"
     game:move(Point:new(1, 0))
   elseif action == 2 then
+    action_description = "move top"
     game:move(Point:new(0, -1))
   elseif action == 3 then
+    action_description = "move bottom"
     game:move(Point:new(0, 1))
   else
+    action_description = "rotate"
     game:rotate()
   end
+  print(string.format("step #%d: " .. action_description, counter + 1))
 
   local previous_field_part = game._field_part
   game:union()
 
   counter = counter + 1
 until game._field_part ~= previous_field_part
-
-print(counter)
