@@ -4,14 +4,12 @@ local FieldSettings = require("biohazardcore.models.fieldsettings")
 local GameSettings = require("biohazardcore.models.gamesettings")
 local Game = require("biohazardcore.game")
 
-local settings = GameSettings:new(
-  FieldSettings:new(Size:new(11, 11), Point:new(0, 0), 0.2),
-  FieldSettings:new(Size:new(3, 3), Point:new(4, 4), 0.5, 5, 5)
-)
-local game = Game:new(settings)
-
 math.randomseed(os.time())
 
+local game = Game:new(GameSettings:new(
+  FieldSettings:new(Size:new(11, 11), Point:new(0, 0), 0.4),
+  FieldSettings:new(Size:new(3, 3), Point:new(4, 4), 0.5, 5, 5)
+))
 local counter = 0
 repeat
   local action = math.floor(5 * math.random())
