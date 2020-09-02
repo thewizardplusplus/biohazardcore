@@ -2,6 +2,47 @@
 
 The library that implements the business logic of the puzzle game inspired by [Conway's Game of Life](https://en.wikipedia.org/wiki/Conway's_Game_of_Life) and various block games.
 
+## Features
+
+- models:
+  - field settings:
+    - storing:
+      - size;
+      - initial offset;
+      - filling;
+      - minimal count;
+      - maximal count;
+    - supporting of default values for some settings;
+  - game settings:
+    - storing:
+      - primary field settings;
+      - movable field part settings;
+- creating a field by its settings:
+  - random filling of the generated field;
+- game business logic:
+  - generating of random fields:
+    - primary field;
+    - movable field part;
+  - operations with the movable field part:
+    - moving;
+    - rotating;
+    - unioning with the primary field.
+
+## Installation
+
+Clone this repository:
+
+```
+$ git clone https://github.com/thewizardplusplus/biohazardcore.git
+$ cd biohazardcore
+```
+
+Install the library with the [LuaRocks](https://luarocks.org/) tool:
+
+```
+$ luarocks make
+```
+
 ## Examples
 
 `biohazardcore.Game`:
