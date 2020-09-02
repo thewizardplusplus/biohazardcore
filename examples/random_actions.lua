@@ -15,7 +15,7 @@ local game = Game:new(settings)
 math.randomseed(os.time())
 
 local counter = 0
-while true do
+repeat
   local action = math.floor(5 * math.random())
   if action == 0 then
     game:move(Point:new(-1, 0))
@@ -29,14 +29,10 @@ while true do
     game:rotate()
   end
 
-  local field_part = game._field_part
+  local previous_field_part = game._field_part
   game:union()
 
-  if game._field_part ~= field_part then
-    break
-  end
-
   counter = counter + 1
-end
+until game._field_part ~= previous_field_part
 
 print(counter)
