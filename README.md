@@ -17,6 +17,11 @@ The library that implements the business logic of the puzzle game inspired by [C
     - storing:
       - primary field settings;
       - movable field part settings;
+  - cell classification:
+    - storing:
+      - old cells (those that are presented in the primary field, but not presented in the movable field part);
+      - new cells (those that are presented in the movable field part, but not presented in the primary field);
+      - intersection between the primary field and the movable field part;
 - creating a field by its settings:
   - random filling of the generated field;
 - game business logic:
@@ -26,7 +31,8 @@ The library that implements the business logic of the puzzle game inspired by [C
   - operations with the movable field part:
     - moving;
     - rotating;
-    - unioning with the primary field.
+    - unioning with the primary field;
+  - classifying cells (see the cell classification model for details).
 
 ## Installation
 
