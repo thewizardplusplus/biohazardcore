@@ -34,4 +34,18 @@ function ClassifiedGame:classify_cells()
   return CellClassification:new(old, new, self:_intersection())
 end
 
+---
+-- @function move
+-- @tparam lualife.models.Point delta_offset
+
+---
+-- @function rotate
+
+---
+-- @function union
+
+---
+-- @function _intersection
+-- @treturn lualife.models.PlacedField
+
 return ClassifiedGame
