@@ -3,6 +3,7 @@ local luaunit = require("luaunit")
 for _, module in ipairs({
   "factory",
   "game",
+  "classifiedgame",
   "models.fieldsettings",
   "models.gamesettings",
   "models.cellclassification",

@@ -3,7 +3,9 @@
 
 local middleclass = require("middleclass")
 local types = require("lualife.types")
+local GameSettings = require("biohazardcore.models.gamesettings")
 local CellClassification = require("biohazardcore.models.cellclassification")
+local Game = require("biohazardcore.game")
 local sets = require("lualife.sets")
 
 local ClassifiedGame = middleclass("ClassifiedGame")
@@ -29,7 +31,7 @@ end
 function ClassifiedGame:classify_cells()
   local old = sets.complement(self._field, self._field_part)
   local new = sets.complement(self._field_part, self._field)
-  local intersection = sets.intersection(game._field, game._field_part)
+  local intersection = sets.intersection(self._field, self._field_part)
   return CellClassification:new(old, new, intersection)
 end
 
