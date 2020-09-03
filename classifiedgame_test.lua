@@ -85,7 +85,8 @@ function TestClassifiedGame.test_classify_cells()
   local want_intersection = PlacedField:new(Size:new(3, 3))
   want_intersection:set(Point:new(0, 2))
 
-  local want_classification = CellClassification:new(want_old, want_new, want_intersection)
+  local want_classification =
+    CellClassification:new(want_old, want_new, want_intersection)
 
   luaunit.assert_true(types.is_instance(classification, CellClassification))
   luaunit.assert_equals(classification, want_classification)

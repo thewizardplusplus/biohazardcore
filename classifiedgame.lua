@@ -5,8 +5,8 @@ local middleclass = require("middleclass")
 local types = require("lualife.types")
 local GameSettings = require("biohazardcore.models.gamesettings")
 local CellClassification = require("biohazardcore.models.cellclassification")
-local Game = require("biohazardcore.game")
 local sets = require("lualife.sets")
+local Game = require("biohazardcore.game")
 
 local ClassifiedGame = middleclass("ClassifiedGame", Game)
 

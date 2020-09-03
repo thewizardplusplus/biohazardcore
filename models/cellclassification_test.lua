@@ -30,7 +30,10 @@ function TestCellClassification.test_new()
   luaunit.assert_true(types.is_instance(classification.new, PlacedField))
   luaunit.assert_is(classification.new, new)
 
-  luaunit.assert_true(types.is_instance(classification.intersection, PlacedField))
+  luaunit.assert_true(types.is_instance(
+    classification.intersection,
+    PlacedField
+  ))
   luaunit.assert_is(classification.intersection, intersection)
 end
 
