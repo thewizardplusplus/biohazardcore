@@ -53,9 +53,7 @@ end
 ---
 -- @function union
 function Game:union()
-  local intersected_field_part =
-    sets.intersection(self._field, self._field_part)
-  if intersected_field_part:count() ~= 0 then
+  if self:_intersection():count() ~= 0 then
     return
   end
 
@@ -64,6 +62,12 @@ function Game:union()
 
   self._field = field_next
   self._field_part = factory.create_field(self._settings.field_part)
+end
+
+---
+-- @treturn lualife.models.PlacedField
+function Game:_intersection()
+  return sets.intersection(self._field, self._field_part)
 end
 
 return Game
