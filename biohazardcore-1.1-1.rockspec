@@ -1,6 +1,6 @@
 rockspec_format = "3.0"
 package = "biohazardcore"
-version = "1.0-1"
+version = "1.1-1"
 description = {
   license = "MIT",
   maintainer = "thewizardplusplus <thewizardplusplus@yandex.ru>",
@@ -8,7 +8,7 @@ description = {
 }
 source = {
   url = "git+https://github.com/thewizardplusplus/biohazardcore.git",
-  tag = "v1.0",
+  tag = "v1.1",
 }
 dependencies = {
   "lua >= 5.2, < 5.4",
@@ -25,10 +25,14 @@ build = {
     ["factory_test"] = "factory_test.lua",
     ["game"] = "game.lua",
     ["game_test"] = "game_test.lua",
+    ["classifiedgame"] = "classifiedgame.lua",
+    ["classifiedgame_test"] = "classifiedgame_test.lua",
     ["models.fieldsettings"] = "models/fieldsettings.lua",
     ["models.fieldsettings_test"] = "models/fieldsettings_test.lua",
     ["models.gamesettings"] = "models/gamesettings.lua",
     ["models.gamesettings_test"] = "models/gamesettings_test.lua",
+    ["models.cellclassification"] = "models/cellclassification.lua",
+    ["models.cellclassification_test"] = "models/cellclassification_test.lua",
   },
   copy_directories = {
     "doc",
