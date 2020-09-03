@@ -3,7 +3,7 @@ local types = require("lualife.types")
 local Size = require("lualife.models.size")
 local Point = require("lualife.models.point")
 local PlacedField = require("lualife.models.placedfield")
-local CellClassification = require("biohazardcore.models.cell_classification")
+local CellClassification = require("biohazardcore.models.cellclassification")
 
 -- luacheck: globals TestCellClassification
 TestCellClassification = {}

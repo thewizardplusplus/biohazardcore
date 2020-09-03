@@ -5,7 +5,7 @@ for _, module in ipairs({
   "game",
   "models.fieldsettings",
   "models.gamesettings",
-  "models.cell_classification",
+  "models.cellclassification",
 }) do
   require("biohazardcore." .. module .. "_test")
 end
