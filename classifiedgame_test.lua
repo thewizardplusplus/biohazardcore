@@ -45,8 +45,8 @@ function TestClassifiedGame.test_new()
 
   luaunit.assert_true(types.is_instance(game, ClassifiedGame))
 
-  luaunit.assert_true(types.is_instance(game._settings, GameSettings))
-  luaunit.assert_is(game._settings, settings)
+  luaunit.assert_true(types.is_instance(game.settings, GameSettings))
+  luaunit.assert_is(game.settings, settings)
 
   luaunit.assert_true(types.is_instance(game._field, PlacedField))
   luaunit.assert_equals(game._field, want_field)
@@ -56,11 +56,10 @@ function TestClassifiedGame.test_new()
 end
 
 function TestClassifiedGame.test_classify_cells()
-  local settings = GameSettings:new(
+  local game = ClassifiedGame:new(GameSettings:new(
     FieldSettings:new(Size:new(3, 3)),
     FieldSettings:new(Size:new(3, 3))
-  )
-  local game = ClassifiedGame:new(settings)
+  ))
 
   game._field = PlacedField:new(Size:new(3, 3))
   game._field:set(Point:new(1, 0))

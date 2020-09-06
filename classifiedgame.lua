@@ -12,7 +12,7 @@ local ClassifiedGame = middleclass("ClassifiedGame", Game)
 
 ---
 -- @table instance
--- @tfield GameSettings _settings
+-- @tfield GameSettings settings
 -- @tfield lualife.models.PlacedField _field
 -- @tfield lualife.models.PlacedField _field_part
 

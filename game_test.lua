@@ -44,8 +44,8 @@ function TestGame.test_new()
 
   luaunit.assert_true(types.is_instance(game, Game))
 
-  luaunit.assert_true(types.is_instance(game._settings, GameSettings))
-  luaunit.assert_is(game._settings, settings)
+  luaunit.assert_true(types.is_instance(game.settings, GameSettings))
+  luaunit.assert_is(game.settings, settings)
 
   luaunit.assert_true(types.is_instance(game._field, PlacedField))
   luaunit.assert_equals(game._field, want_field)
@@ -55,11 +55,10 @@ function TestGame.test_new()
 end
 
 function TestGame.test_move_success()
-  local settings = GameSettings:new(
+  local game = Game:new(GameSettings:new(
     FieldSettings:new(Size:new(10, 10)),
     FieldSettings:new(Size:new(3, 3), Point:new(6, 6), 1)
-  )
-  local game = Game:new(settings)
+  ))
   game:move(Point:new(1, 1))
 
   local want_field_part = PlacedField:new(Size:new(3, 3), Point:new(7, 7))
@@ -78,11 +77,10 @@ function TestGame.test_move_success()
 end
 
 function TestGame.test_move_failure()
-  local settings = GameSettings:new(
+  local game = Game:new(GameSettings:new(
     FieldSettings:new(Size:new(10, 10)),
     FieldSettings:new(Size:new(3, 3), Point:new(6, 6), 1)
-  )
-  local game = Game:new(settings)
+  ))
   game:move(Point:new(2, 2))
 
   local want_field_part = PlacedField:new(Size:new(3, 3), Point:new(6, 6))
@@ -101,11 +99,10 @@ function TestGame.test_move_failure()
 end
 
 function TestGame.test_rotate()
-  local settings = GameSettings:new(
+  local game = Game:new(GameSettings:new(
     FieldSettings:new(Size:new(10, 10)),
     FieldSettings:new(Size:new(3, 3))
-  )
-  local game = Game:new(settings)
+  ))
 
   game._field_part = PlacedField:new(Size:new(3, 3))
   game._field_part:set(Point:new(0, 0))
@@ -132,11 +129,10 @@ end
 function TestGame.test_union_success()
   math.randomseed(1)
 
-  local settings = GameSettings:new(
+  local game = Game:new(GameSettings:new(
     FieldSettings:new(Size:new(4, 4)),
     FieldSettings:new(Size:new(3, 3))
-  )
-  local game = Game:new(settings)
+  ))
 
   game._field = PlacedField:new(Size:new(4, 4))
   game._field:set(Point:new(1, 0))
@@ -170,11 +166,10 @@ function TestGame.test_union_success()
 end
 
 function TestGame.test_union_failure()
-  local settings = GameSettings:new(
+  local game = Game:new(GameSettings:new(
     FieldSettings:new(Size:new(4, 4)),
     FieldSettings:new(Size:new(3, 3))
-  )
-  local game = Game:new(settings)
+  ))
 
   game._field = PlacedField:new(Size:new(4, 4))
   game._field:set(Point:new(1, 0))
