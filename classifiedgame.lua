@@ -35,6 +35,10 @@ function ClassifiedGame:classify_cells()
 end
 
 ---
+-- @function offset
+-- @treturn lualife.models.Point
+
+---
 -- @function move
 -- @tparam lualife.models.Point delta_offset
 

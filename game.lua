@@ -32,6 +32,12 @@ function Game:initialize(settings)
 end
 
 ---
+-- @treturn lualife.models.Point
+function Game:offset()
+  return self._field_part.offset
+end
+
+---
 -- @tparam lualife.models.Point delta_offset
 function Game:move(delta_offset)
   assert(types.is_instance(delta_offset, Point))

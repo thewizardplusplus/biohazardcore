@@ -54,6 +54,17 @@ function TestGame.test_new()
   luaunit.assert_equals(game._field_part, want_field_part)
 end
 
+function TestGame.test_offset()
+  local game = Game:new(GameSettings:new(
+    FieldSettings:new(Size:new(5, 12), Point:new(23, 42), 0.1, 2, 3),
+    FieldSettings:new(Size:new(6, 13), Point:new(24, 43), 0.2, 10, 100)
+  ))
+  local offset = game:offset()
+
+  luaunit.assert_true(types.is_instance(offset, Point))
+  luaunit.assert_equals(offset, Point:new(24, 43))
+end
+
 function TestGame.test_move_success()
   local game = Game:new(GameSettings:new(
     FieldSettings:new(Size:new(10, 10)),
