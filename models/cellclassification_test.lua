@@ -17,6 +17,20 @@ function TestCellClassification.test_cell_kinds()
   luaunit.assert_equals(kinds, want_kinds)
 end
 
+function TestCellClassification.test_is_cell_kind_false()
+  local result = CellClassification.is_cell_kind("unknown")
+
+  luaunit.assert_is_boolean(result)
+  luaunit.assert_false(result)
+end
+
+function TestCellClassification.test_is_cell_kind_true()
+  local result = CellClassification.is_cell_kind("intersection")
+
+  luaunit.assert_is_boolean(result)
+  luaunit.assert_true(result)
+end
+
 function TestCellClassification.test_new()
   local old = PlacedField:new(Size:new(3, 3))
   old:set(Point:new(1, 0))

@@ -24,6 +24,23 @@ function CellClassification.static.cell_kinds()
 end
 
 ---
+-- @function is_cell_kind
+-- @static
+-- @tparam string sample
+-- @treturn bool
+function CellClassification.static.is_cell_kind(sample)
+  assert(type(sample) == "string")
+
+  for _, cell_kind in ipairs(CellClassification.cell_kinds()) do
+    if sample == cell_kind then
+      return true
+    end
+  end
+
+  return false
+end
+
+---
 -- @function new
 -- @tparam lualife.models.PlacedField old
 -- @tparam lualife.models.PlacedField new
