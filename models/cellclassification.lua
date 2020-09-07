@@ -16,6 +16,14 @@ CellClassification:include(Stringifiable)
 -- @tfield lualife.models.PlacedField intersection
 
 ---
+-- @function cell_kinds
+-- @static
+-- @treturn tab array with all cell kinds
+function CellClassification.static.cell_kinds()
+  return {"old", "new", "intersection"}
+end
+
+---
 -- @function new
 -- @tparam lualife.models.PlacedField old
 -- @tparam lualife.models.PlacedField new
@@ -34,11 +42,12 @@ end
 ---
 -- @treturn tab table with instance fields
 function CellClassification:__data()
-  return {
-    old = self.old:__data(),
-    new = self.new:__data(),
-    intersection = self.intersection:__data(),
-  }
+  local data = {}
+  for _, cell_kind in ipairs(CellClassification.cell_kinds()) do
+    data[cell_kind] = self[cell_kind]:__data()
+  end
+
+  return data
 end
 
 ---

@@ -8,6 +8,15 @@ local CellClassification = require("biohazardcore.models.cellclassification")
 -- luacheck: globals TestCellClassification
 TestCellClassification = {}
 
+function TestCellClassification.test_cell_kinds()
+  local kinds = CellClassification.cell_kinds()
+
+  local want_kinds = {"old", "new", "intersection"}
+
+  luaunit.assert_is_table(kinds)
+  luaunit.assert_equals(kinds, want_kinds)
+end
+
 function TestCellClassification.test_new()
   local old = PlacedField:new(Size:new(3, 3))
   old:set(Point:new(1, 0))
