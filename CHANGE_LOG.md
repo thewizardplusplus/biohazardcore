@@ -1,5 +1,17 @@
 # Change Log
 
+## [v1.2](https://github.com/thewizardplusplus/biohazardcore/tree/v1.2) (2020-09-08)
+
+- models:
+  - cell classification:
+    - static possibilities:
+      - list of all known cell kinds;
+      - checking if a cell kind is known;
+- game business logic:
+  - providing access:
+    - to game settings;
+    - to an offset of the movable field part.
+
 ## [v1.1](https://github.com/thewizardplusplus/biohazardcore/tree/v1.1) (2020-09-03)
 
 - models:
