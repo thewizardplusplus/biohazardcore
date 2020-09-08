@@ -18,7 +18,7 @@ CellClassification:include(Stringifiable)
 ---
 -- @function cell_kinds
 -- @static
--- @treturn tab array with all cell kinds
+-- @treturn {string,...} array with all cell kinds
 function CellClassification.static.cell_kinds()
   return {"old", "new", "intersection"}
 end
