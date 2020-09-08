@@ -1,6 +1,6 @@
 rockspec_format = "3.0"
 package = "biohazardcore"
-version = "1.1-1"
+version = "1.2-1"
 description = {
   license = "MIT",
   maintainer = "thewizardplusplus <thewizardplusplus@yandex.ru>",
@@ -8,7 +8,7 @@ description = {
 }
 source = {
   url = "git+https://github.com/thewizardplusplus/biohazardcore.git",
-  tag = "v1.1",
+  tag = "v1.2",
 }
 dependencies = {
   "lua >= 5.2, < 5.4",
