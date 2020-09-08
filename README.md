@@ -18,6 +18,9 @@ The library that implements the business logic of the puzzle game inspired by [C
       - primary field settings;
       - movable field part settings;
   - cell classification:
+    - static possibilities:
+      - list of all known cell kinds;
+      - checking if a cell kind is known;
     - storing:
       - old cells (those that are presented in the primary field, but not presented in the movable field part);
       - new cells (those that are presented in the movable field part, but not presented in the primary field);
@@ -25,6 +28,9 @@ The library that implements the business logic of the puzzle game inspired by [C
 - creating a field by its settings:
   - random filling of the generated field;
 - game business logic:
+  - providing access:
+    - to game settings;
+    - to an offset of the movable field part;
   - generating of random fields:
     - primary field;
     - movable field part;
