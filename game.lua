@@ -32,6 +32,12 @@ function Game:initialize(settings)
 end
 
 ---
+-- @treturn int
+function Game:count()
+  return self._field:count()
+end
+
+---
 -- @treturn lualife.models.Point
 function Game:offset()
   return self._field_part.offset

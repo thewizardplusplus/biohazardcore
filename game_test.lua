@@ -54,6 +54,19 @@ function TestGame.test_new()
   luaunit.assert_equals(game._field_part, want_field_part)
 end
 
+function TestGame.test_count()
+  local game = Game:new(GameSettings:new(
+    FieldSettings:new(Size:new(5, 12), Point:new(23, 42), 0.1, 2, 3),
+    FieldSettings:new(Size:new(6, 13), Point:new(24, 43), 0.2, 10, 100)
+  ))
+  local count = game:count()
+
+  local want_count = game._field:count()
+
+  luaunit.assert_is_number(count)
+  luaunit.assert_equals(count, want_count)
+end
+
 function TestGame.test_offset()
   local game = Game:new(GameSettings:new(
     FieldSettings:new(Size:new(5, 12), Point:new(23, 42), 0.1, 2, 3),

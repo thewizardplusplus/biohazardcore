@@ -35,6 +35,10 @@ function ClassifiedGame:classify_cells()
 end
 
 ---
+-- @function count
+-- @treturn int
+
+---
 -- @function offset
 -- @treturn lualife.models.Point
 
