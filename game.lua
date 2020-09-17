@@ -45,6 +45,7 @@ end
 
 ---
 -- @tparam lualife.models.Point delta_offset
+-- @treturn bool
 function Game:move(delta_offset)
   assert(types.is_instance(delta_offset, Point))
 
@@ -53,7 +54,10 @@ function Game:move(delta_offset)
     PlacedField.place(self._field_part, field_part_offset_next)
   if field_part_next:fits(self._field) then
     self._field_part = field_part_next
+    return true
   end
+
+  return false
 end
 
 ---

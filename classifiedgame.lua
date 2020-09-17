@@ -45,6 +45,7 @@ end
 ---
 -- @function move
 -- @tparam lualife.models.Point delta_offset
+-- @treturn bool
 
 ---
 -- @function rotate

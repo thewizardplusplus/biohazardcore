@@ -83,7 +83,7 @@ function TestGame.test_move_success()
     FieldSettings:new(Size:new(10, 10)),
     FieldSettings:new(Size:new(3, 3), Point:new(6, 6), 1)
   ))
-  game:move(Point:new(1, 1))
+  local moved = game:move(Point:new(1, 1))
 
   local want_field_part = PlacedField:new(Size:new(3, 3), Point:new(7, 7))
   want_field_part:set(Point:new(7, 7))
@@ -98,6 +98,9 @@ function TestGame.test_move_success()
 
   luaunit.assert_true(types.is_instance(game._field_part, PlacedField))
   luaunit.assert_equals(game._field_part, want_field_part)
+
+  luaunit.assert_is_boolean(moved)
+  luaunit.assert_true(moved)
 end
 
 function TestGame.test_move_failure()
@@ -105,7 +108,7 @@ function TestGame.test_move_failure()
     FieldSettings:new(Size:new(10, 10)),
     FieldSettings:new(Size:new(3, 3), Point:new(6, 6), 1)
   ))
-  game:move(Point:new(2, 2))
+  local moved = game:move(Point:new(2, 2))
 
   local want_field_part = PlacedField:new(Size:new(3, 3), Point:new(6, 6))
   want_field_part:set(Point:new(6, 6))
@@ -120,6 +123,9 @@ function TestGame.test_move_failure()
 
   luaunit.assert_true(types.is_instance(game._field_part, PlacedField))
   luaunit.assert_equals(game._field_part, want_field_part)
+
+  luaunit.assert_is_boolean(moved)
+  luaunit.assert_false(moved)
 end
 
 function TestGame.test_rotate()
