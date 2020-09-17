@@ -68,9 +68,10 @@ end
 
 ---
 -- @function union
+-- @treturn bool
 function Game:union()
   if self:_intersection():count() ~= 0 then
-    return
+    return false
   end
 
   local field_next = sets.union(self._field, self._field_part)
@@ -78,6 +79,8 @@ function Game:union()
 
   self._field = field_next
   self._field_part = factory.create_field(self.settings.field_part)
+
+  return true
 end
 
 ---

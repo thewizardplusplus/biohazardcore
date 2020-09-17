@@ -173,7 +173,7 @@ function TestGame.test_union_success()
   game._field_part:set(Point:new(1, 2))
   game._field_part:set(Point:new(2, 2))
 
-  game:union()
+  local unioned = game:union()
 
   local want_field = PlacedField:new(Size:new(4, 4))
   want_field:set(Point:new(0, 1))
@@ -193,6 +193,9 @@ function TestGame.test_union_success()
 
   luaunit.assert_true(types.is_instance(game._field_part, PlacedField))
   luaunit.assert_equals(game._field_part, want_field_part)
+
+  luaunit.assert_is_boolean(unioned)
+  luaunit.assert_true(unioned)
 end
 
 function TestGame.test_union_failure()
@@ -211,7 +214,7 @@ function TestGame.test_union_failure()
   game._field_part:set(Point:new(1, 2))
   game._field_part:set(Point:new(2, 2))
 
-  game:union()
+  local unioned = game:union()
 
   local want_field = PlacedField:new(Size:new(4, 4))
   want_field:set(Point:new(1, 0))
@@ -228,4 +231,7 @@ function TestGame.test_union_failure()
 
   luaunit.assert_true(types.is_instance(game._field_part, PlacedField))
   luaunit.assert_equals(game._field_part, want_field_part)
+
+  luaunit.assert_is_boolean(unioned)
+  luaunit.assert_false(unioned)
 end

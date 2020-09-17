@@ -52,6 +52,7 @@ end
 
 ---
 -- @function union
+-- @treturn bool
 
 ---
 -- @function _intersection

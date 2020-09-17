@@ -32,8 +32,6 @@ repeat
   end
   print(string.format("step #%d: " .. action_description, counter + 1))
 
-  local previous_field_part = game._field_part
-  game:union()
-
+  local unioned = game:union()
   counter = counter + 1
-until game._field_part ~= previous_field_part
+until unioned
