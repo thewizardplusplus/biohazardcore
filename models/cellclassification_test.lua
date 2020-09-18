@@ -60,6 +60,44 @@ function TestCellClassification.test_new()
   luaunit.assert_is(classification.intersection, intersection)
 end
 
+function TestCellClassification.test_pairs()
+  local old = PlacedField:new(Size:new(3, 3))
+  old:set(Point:new(1, 0))
+  old:set(Point:new(2, 1))
+
+  local new = PlacedField:new(Size:new(3, 3))
+  new:set(Point:new(1, 2))
+  new:set(Point:new(2, 2))
+
+  local intersection = PlacedField:new(Size:new(3, 3))
+  intersection:set(Point:new(0, 2))
+
+  local classification = CellClassification:new(old, new, intersection)
+
+  local collected_pairs = {}
+  for cell_kind, cells in pairs(classification) do
+    table.insert(collected_pairs, {
+      key = cell_kind,
+      value = cells,
+    })
+  end
+
+  luaunit.assert_equals(collected_pairs, {
+    {
+      key = "old",
+      value = old,
+    },
+    {
+      key = "new",
+      value = new,
+    },
+    {
+      key = "intersection",
+      value = intersection,
+    },
+  })
+end
+
 function TestCellClassification.test_tostring()
   local old = PlacedField:new(Size:new(3, 3))
   old:set(Point:new(1, 0))
