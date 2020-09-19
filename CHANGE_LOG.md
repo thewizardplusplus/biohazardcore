@@ -1,5 +1,19 @@
 # Change Log
 
+## [v1.3](https://github.com/thewizardplusplus/biohazardcore/tree/v1.3) (2020-09-19)
+
+- models:
+  - cell classification:
+    - supporting of iteration via the `pairs()` function;
+- game business logic:
+  - providing access:
+    - to count of set cells in the primary field;
+  - operations with the movable field part:
+    - moving:
+      - returning of an operation success flag;
+    - unioning with the primary field:
+      - returning of an operation success flag.
+
 ## [v1.2](https://github.com/thewizardplusplus/biohazardcore/tree/v1.2) (2020-09-08)
 
 - models:
