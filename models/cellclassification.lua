@@ -57,7 +57,8 @@ function CellClassification:initialize(old, new, intersection)
 end
 
 ---
--- @treturn func func(instance: CellClassification, field: string): (string, lualife.models.PlacedField); next function
+-- @treturn func func(instance: CellClassification, field: string):
+--   nil|(string, lualife.models.PlacedField); next function
 -- @treturn CellClassification self
 -- @treturn nil
 function CellClassification:__pairs()
