@@ -4,7 +4,6 @@ local Point = require("lualife.models.point")
 local PlacedField = require("lualife.models.placedfield")
 local FieldSettings = require("biohazardcore.models.fieldsettings")
 local GameSettings = require("biohazardcore.models.gamesettings")
-local CellClassification = require("biohazardcore.models.cellclassification")
 local ClassifiedGame = require("biohazardcore.classifiedgame")
 
 local function print_field(field)
@@ -39,6 +38,7 @@ game._field_part:set(Point:new(1, 2))
 game._field_part:set(Point:new(2, 2))
 
 local classification = game:classify_cells()
-for _, cell_kind in ipairs(CellClassification:cell_kinds()) do
-  print_field(classification[cell_kind])
+for cell_kind, cells in pairs(classification) do
+  io.write(cell_kind .. ":\n")
+  print_field(cells)
 end

@@ -80,8 +80,8 @@ end
 -- @treturn tab table with instance fields
 function CellClassification:__data()
   local data = {}
-  for _, cell_kind in ipairs(CellClassification.cell_kinds()) do
-    data[cell_kind] = self[cell_kind]:__data()
+  for cell_kind, cells in pairs(self) do
+    data[cell_kind] = cells:__data()
   end
 
   return data
