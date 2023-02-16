@@ -61,6 +61,12 @@ function TestCellClassification.test_new()
 end
 
 function TestCellClassification.test_pairs()
+  if _VERSION == "Lua 5.1" then
+    luaunit.skip(
+      "Lua 5.1 doesn't support for customizing the `pairs()` function"
+    )
+  end
+
   local old = PlacedField:new(Size:new(3, 3))
   old:set(Point:new(1, 0))
   old:set(Point:new(2, 1))
@@ -99,6 +105,12 @@ function TestCellClassification.test_pairs()
 end
 
 function TestCellClassification.test_tostring()
+  if _VERSION == "Lua 5.1" then
+    luaunit.skip(
+      "Lua 5.1 doesn't support for customizing the `pairs()` function"
+    )
+  end
+
   local old = PlacedField:new(Size:new(3, 3))
   old:set(Point:new(1, 0))
   old:set(Point:new(2, 1))
