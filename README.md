@@ -4,8 +4,11 @@
 [![doc:link](https://img.shields.io/badge/doc%3Alink-link-blue?logo=github)](https://thewizardplusplus.github.io/biohazardcore/)
 [![lint](https://github.com/thewizardplusplus/biohazardcore/actions/workflows/lint.yaml/badge.svg)](https://github.com/thewizardplusplus/biohazardcore/actions/workflows/lint.yaml)
 [![test](https://github.com/thewizardplusplus/biohazardcore/actions/workflows/test.yaml/badge.svg)](https://github.com/thewizardplusplus/biohazardcore/actions/workflows/test.yaml)
+[![luarocks](https://img.shields.io/badge/luarocks-link-blue?logo=lua)](https://luarocks.org/modules/thewizardplusplus/biohazardcore)
 
 The library that implements the business logic of the puzzle game inspired by [Conway's Game of Life](https://en.wikipedia.org/wiki/Conway's_Game_of_Life) and various block games.
+
+_**Disclaimer:** this library was written directly on an Android smartphone with the [QLua](https://play.google.com/store/apps/details?id=com.quseit.qlua5pro2) IDE._
 
 ## Features
 
@@ -51,17 +54,8 @@ The library that implements the business logic of the puzzle game inspired by [C
 
 ## Installation
 
-Clone this repository:
-
 ```
-$ git clone https://github.com/thewizardplusplus/biohazardcore.git
-$ cd biohazardcore
-```
-
-Install the library with the [LuaRocks](https://luarocks.org/) tool:
-
-```
-$ luarocks make
+$ luarocks install biohazardcore
 ```
 
 ## Examples
