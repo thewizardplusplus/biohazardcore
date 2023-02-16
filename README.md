@@ -1,5 +1,7 @@
 # biohazardcore
 
+[![test](https://github.com/thewizardplusplus/biohazardcore/actions/workflows/test.yaml/badge.svg)](https://github.com/thewizardplusplus/biohazardcore/actions/workflows/test.yaml)
+
 The library that implements the business logic of the puzzle game inspired by [Conway's Game of Life](https://en.wikipedia.org/wiki/Conway's_Game_of_Life) and various block games.
 
 ## Features
