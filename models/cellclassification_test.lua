@@ -1,5 +1,5 @@
 local luaunit = require("luaunit")
-local types = require("lualife.types")
+local checks = require("luatypechecks.checks")
 local Size = require("lualife.models.size")
 local Point = require("lualife.models.point")
 local PlacedField = require("lualife.models.placedfield")
@@ -45,15 +45,15 @@ function TestCellClassification.test_new()
 
   local classification = CellClassification:new(old, new, intersection)
 
-  luaunit.assert_true(types.is_instance(classification, CellClassification))
+  luaunit.assert_true(checks.is_instance(classification, CellClassification))
 
-  luaunit.assert_true(types.is_instance(classification.old, PlacedField))
+  luaunit.assert_true(checks.is_instance(classification.old, PlacedField))
   luaunit.assert_is(classification.old, old)
 
-  luaunit.assert_true(types.is_instance(classification.new, PlacedField))
+  luaunit.assert_true(checks.is_instance(classification.new, PlacedField))
   luaunit.assert_is(classification.new, new)
 
-  luaunit.assert_true(types.is_instance(
+  luaunit.assert_true(checks.is_instance(
     classification.intersection,
     PlacedField
   ))
