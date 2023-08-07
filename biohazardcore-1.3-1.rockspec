@@ -15,9 +15,10 @@ dependencies = {
   "lua >= 5.1",
   "middleclass >= 4.1.1, < 5.0",
   "lualife >= 1.5.4, < 2.0",
+  "luatypechecks >= 1.3.4, < 2.0",
 }
 test_dependencies = {
-  "luaunit >= 3.3, < 4.0",
+  "luaunit >= 3.4, < 4.0",
 }
 build = {
   type = "builtin",
