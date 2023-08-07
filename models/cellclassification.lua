@@ -2,7 +2,7 @@
 -- @classmod CellClassification
 
 local middleclass = require("middleclass")
-local types = require("lualife.types")
+local assertions = require("luatypechecks.assertions")
 local Stringifiable = require("lualife.models.stringifiable")
 local PlacedField = require("lualife.models.placedfield")
 
@@ -29,7 +29,7 @@ end
 -- @tparam string sample
 -- @treturn bool
 function CellClassification.static.is_cell_kind(sample)
-  assert(type(sample) == "string")
+  assertions.is_string(sample)
 
   for _, cell_kind in ipairs(CellClassification.cell_kinds()) do
     if sample == cell_kind then
@@ -47,9 +47,9 @@ end
 -- @tparam lualife.models.PlacedField intersection
 -- @treturn CellClassification
 function CellClassification:initialize(old, new, intersection)
-  assert(types.is_instance(old, PlacedField))
-  assert(types.is_instance(new, PlacedField))
-  assert(types.is_instance(intersection, PlacedField))
+  assertions.is_instance(old, PlacedField)
+  assertions.is_instance(new, PlacedField)
+  assertions.is_instance(intersection, PlacedField)
 
   self.old = old
   self.new = new
@@ -57,12 +57,15 @@ function CellClassification:initialize(old, new, intersection)
 end
 
 ---
--- @treturn func func(instance: CellClassification, field: string):
+-- @treturn func func(instance: CellClassification, field: nil|string):
 --   nil|(string, lualife.models.PlacedField); next function
 -- @treturn CellClassification self
 -- @treturn nil
 function CellClassification:__pairs()
   local function next(instance, field)
+    assertions.is_instance(instance, CellClassification)
+    assertions.is_string_or_nil(field)
+
     if field == nil then
       return "old", instance.old
     elseif field == "old" then
