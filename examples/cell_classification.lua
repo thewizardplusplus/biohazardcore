@@ -1,4 +1,4 @@
-local types = require("lualife.types")
+local assertions = require("luatypechecks.assertions")
 local Size = require("lualife.models.size")
 local Point = require("lualife.models.point")
 local PlacedField = require("lualife.models.placedfield")
@@ -7,9 +7,12 @@ local GameSettings = require("biohazardcore.models.gamesettings")
 local ClassifiedGame = require("biohazardcore.classifiedgame")
 
 local function print_field(field)
-  assert(types.is_instance(field, PlacedField))
+  assertions.is_instance(field, PlacedField)
 
   field:map(function(point, contains)
+    assertions.is_instance(point, Point)
+    assertions.is_boolean(contains)
+
     io.write(contains and "O" or ".")
 
     if point.x - field.offset.x == field.size.width - 1 then
