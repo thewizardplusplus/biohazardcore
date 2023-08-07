@@ -1,5 +1,5 @@
 local luaunit = require("luaunit")
-local types = require("lualife.types")
+local checks = require("luatypechecks.checks")
 local Size = require("lualife.models.size")
 local Point = require("lualife.models.point")
 local PlacedField = require("lualife.models.placedfield")
@@ -107,15 +107,15 @@ function TestClassifiedGame.test_new()
     end
   end
 
-  luaunit.assert_true(types.is_instance(game, ClassifiedGame))
+  luaunit.assert_true(checks.is_instance(game, ClassifiedGame))
 
-  luaunit.assert_true(types.is_instance(game.settings, GameSettings))
+  luaunit.assert_true(checks.is_instance(game.settings, GameSettings))
   luaunit.assert_is(game.settings, settings)
 
-  luaunit.assert_true(types.is_instance(game._field, PlacedField))
+  luaunit.assert_true(checks.is_instance(game._field, PlacedField))
   luaunit.assert_equals(game._field, want_field)
 
-  luaunit.assert_true(types.is_instance(game._field_part, PlacedField))
+  luaunit.assert_true(checks.is_instance(game._field_part, PlacedField))
   luaunit.assert_equals(game._field_part, want_field_part)
 end
 
@@ -151,6 +151,6 @@ function TestClassifiedGame.test_classify_cells()
   local want_classification =
     CellClassification:new(want_old, want_new, want_intersection)
 
-  luaunit.assert_true(types.is_instance(classification, CellClassification))
+  luaunit.assert_true(checks.is_instance(classification, CellClassification))
   luaunit.assert_equals(classification, want_classification)
 end
