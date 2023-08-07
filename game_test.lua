@@ -1,5 +1,5 @@
 local luaunit = require("luaunit")
-local types = require("lualife.types")
+local checks = require("luatypechecks.checks")
 local Size = require("lualife.models.size")
 local Point = require("lualife.models.point")
 local PlacedField = require("lualife.models.placedfield")
@@ -106,15 +106,15 @@ function TestGame.test_new()
     end
   end
 
-  luaunit.assert_true(types.is_instance(game, Game))
+  luaunit.assert_true(checks.is_instance(game, Game))
 
-  luaunit.assert_true(types.is_instance(game.settings, GameSettings))
+  luaunit.assert_true(checks.is_instance(game.settings, GameSettings))
   luaunit.assert_is(game.settings, settings)
 
-  luaunit.assert_true(types.is_instance(game._field, PlacedField))
+  luaunit.assert_true(checks.is_instance(game._field, PlacedField))
   luaunit.assert_equals(game._field, want_field)
 
-  luaunit.assert_true(types.is_instance(game._field_part, PlacedField))
+  luaunit.assert_true(checks.is_instance(game._field_part, PlacedField))
   luaunit.assert_equals(game._field_part, want_field_part)
 end
 
@@ -138,7 +138,7 @@ function TestGame.test_offset()
   ))
   local offset = game:offset()
 
-  luaunit.assert_true(types.is_instance(offset, Point))
+  luaunit.assert_true(checks.is_instance(offset, Point))
   luaunit.assert_equals(offset, Point:new(24, 43))
 end
 
@@ -160,7 +160,7 @@ function TestGame.test_move_success()
   want_field_part:set(Point:new(8, 9))
   want_field_part:set(Point:new(9, 9))
 
-  luaunit.assert_true(types.is_instance(game._field_part, PlacedField))
+  luaunit.assert_true(checks.is_instance(game._field_part, PlacedField))
   luaunit.assert_equals(game._field_part, want_field_part)
 
   luaunit.assert_is_boolean(moved)
@@ -185,7 +185,7 @@ function TestGame.test_move_failure()
   want_field_part:set(Point:new(7, 8))
   want_field_part:set(Point:new(8, 8))
 
-  luaunit.assert_true(types.is_instance(game._field_part, PlacedField))
+  luaunit.assert_true(checks.is_instance(game._field_part, PlacedField))
   luaunit.assert_equals(game._field_part, want_field_part)
 
   luaunit.assert_is_boolean(moved)
@@ -216,7 +216,7 @@ function TestGame.test_rotate()
   want_field_part:set(Point:new(2, 1))
   want_field_part:set(Point:new(2, 2))
 
-  luaunit.assert_true(types.is_instance(game._field_part, PlacedField))
+  luaunit.assert_true(checks.is_instance(game._field_part, PlacedField))
   luaunit.assert_equals(game._field_part, want_field_part)
 end
 
@@ -246,7 +246,7 @@ function TestGame.test_union_success()
   want_field:set(Point:new(2, 2))
   want_field:set(Point:new(1, 3))
 
-  luaunit.assert_true(types.is_instance(game._field, PlacedField))
+  luaunit.assert_true(checks.is_instance(game._field, PlacedField))
   luaunit.assert_equals(game._field, want_field)
 
   local want_field_part = PlacedField:new(Size:new(3, 3))
@@ -276,7 +276,7 @@ function TestGame.test_union_success()
     end
   end
 
-  luaunit.assert_true(types.is_instance(game._field_part, PlacedField))
+  luaunit.assert_true(checks.is_instance(game._field_part, PlacedField))
   luaunit.assert_equals(game._field_part, want_field_part)
 
   luaunit.assert_is_boolean(unioned)
@@ -306,7 +306,7 @@ function TestGame.test_union_failure()
   want_field:set(Point:new(2, 1))
   want_field:set(Point:new(0, 2))
 
-  luaunit.assert_true(types.is_instance(game._field, PlacedField))
+  luaunit.assert_true(checks.is_instance(game._field, PlacedField))
   luaunit.assert_equals(game._field, want_field)
 
   local want_field_part = PlacedField:new(Size:new(3, 3))
@@ -314,7 +314,7 @@ function TestGame.test_union_failure()
   want_field_part:set(Point:new(1, 2))
   want_field_part:set(Point:new(2, 2))
 
-  luaunit.assert_true(types.is_instance(game._field_part, PlacedField))
+  luaunit.assert_true(checks.is_instance(game._field_part, PlacedField))
   luaunit.assert_equals(game._field_part, want_field_part)
 
   luaunit.assert_is_boolean(unioned)
