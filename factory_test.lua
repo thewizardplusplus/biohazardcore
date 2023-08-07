@@ -1,5 +1,5 @@
 local luaunit = require("luaunit")
-local types = require("lualife.types")
+local checks = require("luatypechecks.checks")
 local Size = require("lualife.models.size")
 local Point = require("lualife.models.point")
 local PlacedField = require("lualife.models.placedfield")
@@ -43,12 +43,12 @@ function TestFactory.test_neighbors()
     end
   end
 
-  luaunit.assert_true(types.is_instance(field, PlacedField))
+  luaunit.assert_true(checks.is_instance(field, PlacedField))
 
-  luaunit.assert_true(types.is_instance(field.size, Size))
+  luaunit.assert_true(checks.is_instance(field.size, Size))
   luaunit.assert_is(field.size, settings.size)
 
-  luaunit.assert_true(types.is_instance(field.offset, Point))
+  luaunit.assert_true(checks.is_instance(field.offset, Point))
   luaunit.assert_is(field.offset, settings.initial_offset)
 
   luaunit.assert_is_table(field._cells)
