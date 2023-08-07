@@ -1,5 +1,5 @@
 local luaunit = require("luaunit")
-local types = require("lualife.types")
+local checks = require("luatypechecks.checks")
 local Size = require("lualife.models.size")
 local Point = require("lualife.models.point")
 local FieldSettings = require("biohazardcore.models.fieldsettings")
@@ -15,12 +15,12 @@ function TestGameSettings.test_new()
     FieldSettings:new(Size:new(6, 13), Point:new(24, 43), 0.2, 10, 100)
   local settings = GameSettings:new(field_settings, field_part_settings)
 
-  luaunit.assert_true(types.is_instance(settings, GameSettings))
+  luaunit.assert_true(checks.is_instance(settings, GameSettings))
 
-  luaunit.assert_true(types.is_instance(settings.field, FieldSettings))
+  luaunit.assert_true(checks.is_instance(settings.field, FieldSettings))
   luaunit.assert_is(settings.field, field_settings)
 
-  luaunit.assert_true(types.is_instance(settings.field_part, FieldSettings))
+  luaunit.assert_true(checks.is_instance(settings.field_part, FieldSettings))
   luaunit.assert_is(settings.field_part, field_part_settings)
 end
 
