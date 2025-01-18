@@ -119,6 +119,65 @@ function TestClassifiedGame.test_new()
   luaunit.assert_equals(game._field_part, want_field_part)
 end
 
+function TestClassifiedGame.test_tostring()
+  local game = ClassifiedGame:new(GameSettings:new(
+    FieldSettings:new(Size:new(5, 12), Point:new(23, 42), 0.1, 2, 3),
+    FieldSettings:new(Size:new(6, 13), Point:new(24, 43), 0.2, 10, 100)
+  ))
+
+  game._field = PlacedField:new(Size:new(5, 12), Point:new(23, 42))
+  game._field:set(Point:new(25, 45))
+  game._field:set(Point:new(27, 44))
+
+  game._field_part = PlacedField:new(Size:new(6, 13), Point:new(24, 43))
+  game._field_part:set(Point:new(26, 46))
+  game._field_part:set(Point:new(28, 45))
+
+  local text = tostring(game)
+
+  luaunit.assert_is_string(text)
+  luaunit.assert_equals(text, "{" ..
+    "__name = \"ClassifiedGame\"," ..
+    "field = {" ..
+      "__name = \"PlacedField\"," ..
+      "cells = { " ..
+        "{__name = \"Point\",x = 27,y = 44}, " ..
+        "{__name = \"Point\",x = 25,y = 45} " ..
+      "}," ..
+      "offset = {__name = \"Point\",x = 23,y = 42}," ..
+      "size = {__name = \"Size\",height = 12,width = 5}" ..
+    "}," ..
+    "field_part = {" ..
+      "__name = \"PlacedField\"," ..
+      "cells = { " ..
+        "{__name = \"Point\",x = 28,y = 45}, " ..
+        "{__name = \"Point\",x = 26,y = 46} " ..
+      "}," ..
+      "offset = {__name = \"Point\",x = 24,y = 43}," ..
+      "size = {__name = \"Size\",height = 13,width = 6}" ..
+    "}," ..
+    "settings = {" ..
+      "__name = \"GameSettings\"," ..
+      "field = {" ..
+        "__name = \"FieldSettings\"," ..
+        "filling = 0.1," ..
+        "initial_offset = {__name = \"Point\",x = 23,y = 42}," ..
+        "maximal_count = 3," ..
+        "minimal_count = 2," ..
+        "size = {__name = \"Size\",height = 12,width = 5}" ..
+      "}," ..
+      "field_part = {" ..
+        "__name = \"FieldSettings\"," ..
+        "filling = 0.2," ..
+        "initial_offset = {__name = \"Point\",x = 24,y = 43}," ..
+        "maximal_count = 100," ..
+        "minimal_count = 10," ..
+        "size = {__name = \"Size\",height = 13,width = 6}" ..
+      "}" ..
+    "}" ..
+  "}")
+end
+
 function TestClassifiedGame.test_classify_cells()
   local game = ClassifiedGame:new(GameSettings:new(
     FieldSettings:new(Size:new(3, 3)),
