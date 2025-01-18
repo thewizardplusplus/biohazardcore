@@ -33,19 +33,22 @@ function TestGameSettings.test_tostring()
 
   luaunit.assert_is_string(text)
   luaunit.assert_equals(text, "{" ..
+    "__name = \"GameSettings\"," ..
     "field = {" ..
+      "__name = \"FieldSettings\"," ..
       "filling = 0.1," ..
-      "initial_offset = {x = 23,y = 42}," ..
+      "initial_offset = {__name = \"Point\",x = 23,y = 42}," ..
       "maximal_count = 3," ..
       "minimal_count = 2," ..
-      "size = {height = 12,width = 5}" ..
+      "size = {__name = \"Size\",height = 12,width = 5}" ..
     "}," ..
     "field_part = {" ..
+      "__name = \"FieldSettings\"," ..
       "filling = 0.2," ..
-      "initial_offset = {x = 24,y = 43}," ..
+      "initial_offset = {__name = \"Point\",x = 24,y = 43}," ..
       "maximal_count = 100," ..
       "minimal_count = 10," ..
-      "size = {height = 13,width = 6}" ..
+      "size = {__name = \"Size\",height = 13,width = 6}" ..
     "}" ..
   "}")
 end
