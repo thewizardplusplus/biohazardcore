@@ -59,10 +59,11 @@ function TestFieldSettings.test_tostring()
 
   luaunit.assert_is_string(text)
   luaunit.assert_equals(text, "{" ..
+    "__name = \"FieldSettings\"," ..
     "filling = 0.1," ..
-    "initial_offset = {x = 23,y = 42}," ..
+    "initial_offset = {__name = \"Point\",x = 23,y = 42}," ..
     "maximal_count = 3," ..
     "minimal_count = 2," ..
-    "size = {height = 12,width = 5}" ..
+    "size = {__name = \"Size\",height = 12,width = 5}" ..
   "}")
 end
