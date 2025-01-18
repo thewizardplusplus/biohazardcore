@@ -1,13 +1,51 @@
+-- luacheck: no max comment line length
+
 ---
 -- @classmod GameSettings
 
 local middleclass = require("middleclass")
 local assertions = require("luatypechecks.assertions")
-local Stringifiable = require("lualife.models.stringifiable")
+local Nameable = require("luaserialization.nameable")
+local Stringifiable = require("luaserialization.stringifiable")
 local FieldSettings = require("biohazardcore.models.fieldsettings")
 
 local GameSettings = middleclass("GameSettings")
+GameSettings:include(Nameable)
 GameSettings:include(Stringifiable)
+
+---
+-- @function schema
+-- @static
+-- @treturn tab JSON Schema for this class
+--   (see the [luaserialization](https://github.com/thewizardplusplus/luaserialization) library)
+function GameSettings.static.schema()
+  local field_settings_schema = FieldSettings.schema()
+  local definitions = field_settings_schema.definitions
+  field_settings_schema.definitions = nil
+
+  return {
+    type = "object",
+    required = {"field", "field_part"},
+    properties = {
+      field = field_settings_schema,
+      field_part = field_settings_schema,
+    },
+    definitions = definitions,
+  }
+end
+
+---
+-- @function from_options
+-- @static
+-- @tparam tab options constructor options conforming to the JSON Schema
+--   returned by @{GameSettings.schema|GameSettings.schema()}
+--   (see the [luaserialization](https://github.com/thewizardplusplus/luaserialization) library)
+-- @treturn GameSettings
+function GameSettings.static.from_options(options)
+  assertions.is_table(options)
+
+  return GameSettings:new(options.field, options.field_part)
+end
 
 ---
 -- @table instance
@@ -29,15 +67,17 @@ end
 
 ---
 -- @treturn tab table with instance fields
+--   (see the [luaserialization](https://github.com/thewizardplusplus/luaserialization) library)
 function GameSettings:__data()
   return {
-    field = self.field:__data(),
-    field_part = self.field_part:__data(),
+    field = self.field,
+    field_part = self.field_part,
   }
 end
 
 ---
 -- @function __tostring
 -- @treturn string stringified table with instance fields
+--   (see the [luaserialization](https://github.com/thewizardplusplus/luaserialization) library)
 
 return GameSettings
