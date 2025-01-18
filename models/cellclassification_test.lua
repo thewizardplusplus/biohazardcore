@@ -127,20 +127,30 @@ function TestCellClassification.test_tostring()
 
   luaunit.assert_is_string(text)
   luaunit.assert_equals(text, "{" ..
+    "__name = \"CellClassification\"," ..
     "intersection = {" ..
-      "cells = { {x = 0,y = 2} }," ..
-      "offset = {x = 0,y = 0}," ..
-      "size = {height = 3,width = 3}" ..
+      "__name = \"PlacedField\"," ..
+      "cells = { {__name = \"Point\",x = 0,y = 2} }," ..
+      "offset = {__name = \"Point\",x = 0,y = 0}," ..
+      "size = {__name = \"Size\",height = 3,width = 3}" ..
     "}," ..
     "new = {" ..
-      "cells = { {x = 1,y = 2}, {x = 2,y = 2} }," ..
-      "offset = {x = 0,y = 0}," ..
-      "size = {height = 3,width = 3}" ..
+      "__name = \"PlacedField\"," ..
+      "cells = { " ..
+        "{__name = \"Point\",x = 1,y = 2}, " ..
+        "{__name = \"Point\",x = 2,y = 2} " ..
+      "}," ..
+      "offset = {__name = \"Point\",x = 0,y = 0}," ..
+      "size = {__name = \"Size\",height = 3,width = 3}" ..
     "}," ..
     "old = {" ..
-      "cells = { {x = 1,y = 0}, {x = 2,y = 1} }," ..
-      "offset = {x = 0,y = 0}," ..
-      "size = {height = 3,width = 3}" ..
+      "__name = \"PlacedField\"," ..
+      "cells = { " ..
+        "{__name = \"Point\",x = 1,y = 0}, " ..
+        "{__name = \"Point\",x = 2,y = 1} " ..
+      "}," ..
+      "offset = {__name = \"Point\",x = 0,y = 0}," ..
+      "size = {__name = \"Size\",height = 3,width = 3}" ..
     "}" ..
   "}")
 end
