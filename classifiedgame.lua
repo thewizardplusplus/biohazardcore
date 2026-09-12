@@ -52,11 +52,11 @@ end
 
 ---
 -- @function offset
--- @treturn lualife.models.Point
+-- @treturn Vector2D
 
 ---
 -- @function move
--- @tparam lualife.models.Point delta_offset
+-- @tparam Vector2D delta_offset
 -- @treturn bool
 
 ---
