@@ -7,7 +7,8 @@ local middleclass = require("middleclass")
 local assertions = require("luatypechecks.assertions")
 local Nameable = require("luaserialization.nameable")
 local Stringifiable = require("luaserialization.stringifiable")
-local Point = require("lualife.models.point")
+local Vector2D = require("luamath.vector2d")
+local Matrix3x3 = require("luamath.matrix3x3")
 local PlacedField = require("lualife.models.placedfield")
 local GameSettings = require("biohazardcore.models.gamesettings")
 local sets = require("lualife.sets")
@@ -60,18 +61,19 @@ function Game:count()
 end
 
 ---
--- @treturn lualife.models.Point
+-- @treturn Vector2D
 function Game:offset()
-  return self._field_part.offset
+  return self._field_part:offset()
 end
 
 ---
--- @tparam lualife.models.Point delta_offset
+-- @tparam Vector2D delta_offset
 -- @treturn bool
 function Game:move(delta_offset)
-  assertions.is_instance(delta_offset, Point)
+  assertions.is_instance(delta_offset, Vector2D)
 
-  local field_part_offset_next = self._field_part.offset:translate(delta_offset)
+  local field_part_offset_next =
+    self:offset() * Matrix3x3.translate(delta_offset)
   local field_part_next =
     PlacedField.place(self._field_part, field_part_offset_next)
   if field_part_next:fits(self._field) then
