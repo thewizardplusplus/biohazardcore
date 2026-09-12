@@ -33,9 +33,9 @@ Game:include(Stringifiable)
 function Game:initialize(settings)
   assertions.is_instance(settings, GameSettings)
 
-  self.settings = settings
-  self._field = factory.create_field(settings.field)
-  self._field_part = factory.create_field(settings.field_part)
+  self.settings = GameSettings:new(settings.field, settings.field_part)
+  self._field = factory.create_field(self.settings.field)
+  self._field_part = factory.create_field(self.settings.field_part)
 end
 
 ---

@@ -121,13 +121,29 @@ function TestClassifiedGame.test_new()
   luaunit.assert_true(checks.is_instance(game, ClassifiedGame))
 
   luaunit.assert_true(checks.is_instance(game.settings, GameSettings))
-  luaunit.assert_is(game.settings, settings)
+  luaunit.assert_equals(game.settings, settings)
 
   luaunit.assert_true(checks.is_instance(game._field, PlacedField))
   luaunit.assert_equals(game._field, want_field)
 
   luaunit.assert_true(checks.is_instance(game._field_part, PlacedField))
   luaunit.assert_equals(game._field_part, want_field_part)
+end
+
+function TestClassifiedGame.test_new_copies_inputs()
+  local settings = GameSettings:new(
+    FieldSettings:new(Size:new(5, 12)),
+    FieldSettings:new(Size:new(6, 13))
+  )
+  local game = ClassifiedGame:new(settings)
+
+  settings.field.size.height = 20
+  settings.field_part.initial_offset.y = 50
+
+  luaunit.assert_equals(game.settings, GameSettings:new(
+    FieldSettings:new(Size:new(5, 12)),
+    FieldSettings:new(Size:new(6, 13))
+  ))
 end
 
 function TestClassifiedGame.test_tostring()

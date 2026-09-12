@@ -48,9 +48,9 @@ function CellClassification:initialize(old, new, intersection)
   assertions.is_instance(new, PlacedField)
   assertions.is_instance(intersection, PlacedField)
 
-  self.old = old
-  self.new = new
-  self.intersection = intersection
+  self.old = PlacedField.place(old, old:offset())
+  self.new = PlacedField.place(new, new:offset())
+  self.intersection = PlacedField.place(intersection, intersection:offset())
 end
 
 ---

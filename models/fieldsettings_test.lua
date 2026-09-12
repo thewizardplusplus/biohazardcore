@@ -78,6 +78,27 @@ function TestFieldSettings.test_from_json_error()
   )
 end
 
+function TestFieldSettings.test_from_options_copies_inputs()
+  local options = {
+    size = Size:new(5, 12),
+    initial_offset = Vector2D:new(23, 42),
+    filling = 0.1,
+    count_range = Range:new(2, 3),
+  }
+  local settings = FieldSettings.from_options(options)
+
+  options.size.height = 20
+  options.initial_offset.y = 50
+  options.count_range.max = 4
+
+  luaunit.assert_equals(settings, FieldSettings:new(
+    Size:new(5, 12),
+    Vector2D:new(23, 42),
+    0.1,
+    Range:new(2, 3)
+  ))
+end
+
 function TestFieldSettings.test_new_full()
   local size = Size:new(5, 12)
   local initial_offset = Vector2D:new(23, 42)
@@ -116,6 +137,24 @@ function TestFieldSettings.test_new_partial()
 
   luaunit.assert_true(checks.is_instance(settings.count_range, Range))
   luaunit.assert_equals(settings.count_range, Range:new(0, math.huge))
+end
+
+function TestFieldSettings.test_new_copies_inputs()
+  local size = Size:new(5, 12)
+  local initial_offset = Vector2D:new(23, 42)
+  local count_range = Range:new(2, 3)
+  local settings = FieldSettings:new(size, initial_offset, 0.1, count_range)
+
+  size.height = 20
+  initial_offset.y = 50
+  count_range.max = 4
+
+  luaunit.assert_equals(settings, FieldSettings:new(
+    Size:new(5, 12),
+    Vector2D:new(23, 42),
+    0.1,
+    Range:new(2, 3)
+  ))
 end
 
 function TestFieldSettings.test_tostring()

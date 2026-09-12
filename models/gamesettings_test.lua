@@ -107,6 +107,22 @@ function TestGameSettings.test_from_json_error()
   )
 end
 
+function TestGameSettings.test_from_options_copies_inputs()
+  local options = {
+    field = FieldSettings:new(Size:new(5, 12)),
+    field_part = FieldSettings:new(Size:new(6, 13)),
+  }
+  local settings = GameSettings.from_options(options)
+
+  options.field.size.height = 20
+  options.field_part.initial_offset.y = 50
+
+  luaunit.assert_equals(settings, GameSettings:new(
+    FieldSettings:new(Size:new(5, 12)),
+    FieldSettings:new(Size:new(6, 13))
+  ))
+end
+
 function TestGameSettings.test_new()
   local field_settings = FieldSettings:new(
     Size:new(5, 12),
@@ -125,10 +141,24 @@ function TestGameSettings.test_new()
   luaunit.assert_true(checks.is_instance(settings, GameSettings))
 
   luaunit.assert_true(checks.is_instance(settings.field, FieldSettings))
-  luaunit.assert_is(settings.field, field_settings)
+  luaunit.assert_equals(settings.field, field_settings)
 
   luaunit.assert_true(checks.is_instance(settings.field_part, FieldSettings))
-  luaunit.assert_is(settings.field_part, field_part_settings)
+  luaunit.assert_equals(settings.field_part, field_part_settings)
+end
+
+function TestGameSettings.test_new_copies_inputs()
+  local field = FieldSettings:new(Size:new(5, 12))
+  local field_part = FieldSettings:new(Size:new(6, 13))
+  local settings = GameSettings:new(field, field_part)
+
+  field.size.height = 20
+  field_part.initial_offset.y = 50
+
+  luaunit.assert_equals(settings, GameSettings:new(
+    FieldSettings:new(Size:new(5, 12)),
+    FieldSettings:new(Size:new(6, 13))
+  ))
 end
 
 function TestGameSettings.test_tostring()
