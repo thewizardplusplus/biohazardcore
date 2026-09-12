@@ -18,8 +18,7 @@ function factory.create_field(settings)
   return random.generate_with_limits(
     field_sample,
     settings.filling,
-    settings.minimal_count,
-    settings.maximal_count
+    settings.count_range
   )
 end
 
