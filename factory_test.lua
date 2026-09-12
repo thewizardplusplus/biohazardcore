@@ -72,3 +72,20 @@ function TestFactory.test_neighbors()
   luaunit.assert_is_table(field._cells)
   luaunit.assert_equals(field._cells, wanted_cells)
 end
+
+function TestFactory.test_create_field_copies_inputs()
+  local settings = FieldSettings:new(
+    Size:new(5, 12),
+    Vector2D:new(23, 42),
+    0.1,
+    Range:new(2, 3)
+  )
+  local field = factory.create_field(settings)
+  local want_field = PlacedField.place(field, field:offset())
+
+  settings.size.height = 20
+  settings.initial_offset.y = 50
+  settings.count_range.max = 4
+
+  luaunit.assert_equals(field, want_field)
+end

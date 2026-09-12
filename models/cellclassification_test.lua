@@ -48,16 +48,44 @@ function TestCellClassification.test_new()
   luaunit.assert_true(checks.is_instance(classification, CellClassification))
 
   luaunit.assert_true(checks.is_instance(classification.old, PlacedField))
-  luaunit.assert_is(classification.old, old)
+  luaunit.assert_equals(classification.old, old)
 
   luaunit.assert_true(checks.is_instance(classification.new, PlacedField))
-  luaunit.assert_is(classification.new, new)
+  luaunit.assert_equals(classification.new, new)
 
   luaunit.assert_true(checks.is_instance(
     classification.intersection,
     PlacedField
   ))
-  luaunit.assert_is(classification.intersection, intersection)
+  luaunit.assert_equals(classification.intersection, intersection)
+end
+
+function TestCellClassification.test_new_copies_inputs()
+  local old = PlacedField:new(Size:new(3, 3))
+  old:set(Vector2D:new(1, 0))
+
+  local new = PlacedField:new(Size:new(3, 3))
+  new:set(Vector2D:new(1, 2))
+
+  local intersection = PlacedField:new(Size:new(3, 3))
+  intersection:set(Vector2D:new(0, 2))
+
+  local classification = CellClassification:new(old, new, intersection)
+
+  old:set(Vector2D:new(2, 1))
+  new.size.height = 4
+  intersection:set(Vector2D:new(2, 2))
+
+  local want_classification = CellClassification:new(
+    PlacedField:new(Size:new(3, 3)),
+    PlacedField:new(Size:new(3, 3)),
+    PlacedField:new(Size:new(3, 3))
+  )
+  want_classification.old:set(Vector2D:new(1, 0))
+  want_classification.new:set(Vector2D:new(1, 2))
+  want_classification.intersection:set(Vector2D:new(0, 2))
+
+  luaunit.assert_equals(classification, want_classification)
 end
 
 function TestCellClassification.test_pairs()

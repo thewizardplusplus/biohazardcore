@@ -56,8 +56,18 @@ function GameSettings:initialize(field, field_part)
   assertions.is_instance(field, FieldSettings)
   assertions.is_instance(field_part, FieldSettings)
 
-  self.field = field
-  self.field_part = field_part
+  self.field = FieldSettings:new(
+    field.size,
+    field.initial_offset,
+    field.filling,
+    field.count_range
+  )
+  self.field_part = FieldSettings:new(
+    field_part.size,
+    field_part.initial_offset,
+    field_part.filling,
+    field_part.count_range
+  )
 end
 
 ---
