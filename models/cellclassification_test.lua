@@ -1,7 +1,7 @@
 local luaunit = require("luaunit")
 local checks = require("luatypechecks.checks")
-local Size = require("lualife.models.size")
-local Point = require("lualife.models.point")
+local Vector2D = require("luamath.vector2d")
+local Size = require("luamath.models.size")
 local PlacedField = require("lualife.models.placedfield")
 local CellClassification = require("biohazardcore.models.cellclassification")
 
@@ -33,15 +33,15 @@ end
 
 function TestCellClassification.test_new()
   local old = PlacedField:new(Size:new(3, 3))
-  old:set(Point:new(1, 0))
-  old:set(Point:new(2, 1))
+  old:set(Vector2D:new(1, 0))
+  old:set(Vector2D:new(2, 1))
 
   local new = PlacedField:new(Size:new(3, 3))
-  new:set(Point:new(1, 2))
-  new:set(Point:new(2, 2))
+  new:set(Vector2D:new(1, 2))
+  new:set(Vector2D:new(2, 2))
 
   local intersection = PlacedField:new(Size:new(3, 3))
-  intersection:set(Point:new(0, 2))
+  intersection:set(Vector2D:new(0, 2))
 
   local classification = CellClassification:new(old, new, intersection)
 
@@ -68,15 +68,15 @@ function TestCellClassification.test_pairs()
   end
 
   local old = PlacedField:new(Size:new(3, 3))
-  old:set(Point:new(1, 0))
-  old:set(Point:new(2, 1))
+  old:set(Vector2D:new(1, 0))
+  old:set(Vector2D:new(2, 1))
 
   local new = PlacedField:new(Size:new(3, 3))
-  new:set(Point:new(1, 2))
-  new:set(Point:new(2, 2))
+  new:set(Vector2D:new(1, 2))
+  new:set(Vector2D:new(2, 2))
 
   local intersection = PlacedField:new(Size:new(3, 3))
-  intersection:set(Point:new(0, 2))
+  intersection:set(Vector2D:new(0, 2))
 
   local classification = CellClassification:new(old, new, intersection)
 
@@ -112,15 +112,15 @@ function TestCellClassification.test_tostring()
   end
 
   local old = PlacedField:new(Size:new(3, 3))
-  old:set(Point:new(1, 0))
-  old:set(Point:new(2, 1))
+  old:set(Vector2D:new(1, 0))
+  old:set(Vector2D:new(2, 1))
 
   local new = PlacedField:new(Size:new(3, 3))
-  new:set(Point:new(1, 2))
-  new:set(Point:new(2, 2))
+  new:set(Vector2D:new(1, 2))
+  new:set(Vector2D:new(2, 2))
 
   local intersection = PlacedField:new(Size:new(3, 3))
-  intersection:set(Point:new(0, 2))
+  intersection:set(Vector2D:new(0, 2))
 
   local classification = CellClassification:new(old, new, intersection)
   local text = tostring(classification)
@@ -130,26 +130,53 @@ function TestCellClassification.test_tostring()
     "__name = \"CellClassification\"," ..
     "intersection = {" ..
       "__name = \"PlacedField\"," ..
-      "cells = { {__name = \"Point\",x = 0,y = 2} }," ..
-      "offset = {__name = \"Point\",x = 0,y = 0}," ..
+      "bounds = {" ..
+        "__name = \"BoundingBox\"," ..
+        "max = {__name = \"Vector2D\",x = 2,y = 2}," ..
+        "min = {__name = \"Vector2D\",x = 0,y = 0}" ..
+      "}," ..
+      "cells = { {__name = \"Vector2D\",x = 0,y = 2} }," ..
+      "local_bounds = {" ..
+        "__name = \"BoundingBox\"," ..
+        "max = {__name = \"Vector2D\",x = 2,y = 2}," ..
+        "min = {__name = \"Vector2D\",x = 0,y = 0}" ..
+      "}," ..
       "size = {__name = \"Size\",height = 3,width = 3}" ..
     "}," ..
     "new = {" ..
       "__name = \"PlacedField\"," ..
-      "cells = { " ..
-        "{__name = \"Point\",x = 1,y = 2}, " ..
-        "{__name = \"Point\",x = 2,y = 2} " ..
+      "bounds = {" ..
+        "__name = \"BoundingBox\"," ..
+        "max = {__name = \"Vector2D\",x = 2,y = 2}," ..
+        "min = {__name = \"Vector2D\",x = 0,y = 0}" ..
       "}," ..
-      "offset = {__name = \"Point\",x = 0,y = 0}," ..
+      "cells = { " ..
+        "{__name = \"Vector2D\",x = 1,y = 2}, " ..
+        "{__name = \"Vector2D\",x = 2,y = 2} " ..
+      "}," ..
+      "local_bounds = {" ..
+        "__name = \"BoundingBox\"," ..
+        "max = {__name = \"Vector2D\",x = 2,y = 2}," ..
+        "min = {__name = \"Vector2D\",x = 0,y = 0}" ..
+      "}," ..
       "size = {__name = \"Size\",height = 3,width = 3}" ..
     "}," ..
     "old = {" ..
       "__name = \"PlacedField\"," ..
-      "cells = { " ..
-        "{__name = \"Point\",x = 1,y = 0}, " ..
-        "{__name = \"Point\",x = 2,y = 1} " ..
+      "bounds = {" ..
+        "__name = \"BoundingBox\"," ..
+        "max = {__name = \"Vector2D\",x = 2,y = 2}," ..
+        "min = {__name = \"Vector2D\",x = 0,y = 0}" ..
       "}," ..
-      "offset = {__name = \"Point\",x = 0,y = 0}," ..
+      "cells = { " ..
+        "{__name = \"Vector2D\",x = 1,y = 0}, " ..
+        "{__name = \"Vector2D\",x = 2,y = 1} " ..
+      "}," ..
+      "local_bounds = {" ..
+        "__name = \"BoundingBox\"," ..
+        "max = {__name = \"Vector2D\",x = 2,y = 2}," ..
+        "min = {__name = \"Vector2D\",x = 0,y = 0}" ..
+      "}," ..
       "size = {__name = \"Size\",height = 3,width = 3}" ..
     "}" ..
   "}")
