@@ -16,15 +16,15 @@ local matrix = require("lualife.matrix")
 local life = require("lualife.life")
 local factory = require("biohazardcore.factory")
 
-local Game = middleclass("Game")
-Game:include(Nameable)
-Game:include(Stringifiable)
-
 ---
 -- @table instance
 -- @tfield GameSettings settings
 -- @tfield lualife.models.PlacedField _field
 -- @tfield lualife.models.PlacedField _field_part
+
+local Game = middleclass("Game")
+Game:include(Nameable)
+Game:include(Stringifiable)
 
 ---
 -- @function new

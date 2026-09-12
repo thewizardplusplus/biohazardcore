@@ -10,13 +10,13 @@ local CellClassification = require("biohazardcore.models.cellclassification")
 local sets = require("lualife.sets")
 local Game = require("biohazardcore.game")
 
-local ClassifiedGame = middleclass("ClassifiedGame", Game)
-
 ---
 -- @table instance
 -- @tfield GameSettings settings
 -- @tfield lualife.models.PlacedField _field
 -- @tfield lualife.models.PlacedField _field_part
+
+local ClassifiedGame = middleclass("ClassifiedGame", Game)
 
 ---
 -- @function new

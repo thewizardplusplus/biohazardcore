@@ -11,6 +11,13 @@ local Vector2D = require("luamath.vector2d")
 local Size = require("luamath.models.size")
 local Range = require("luamath.models.range")
 
+---
+-- @table instance
+-- @tfield Size size
+-- @tfield Vector2D initial_offset
+-- @tfield number filling [0, 1]
+-- @tfield Range count_range cell count range
+
 local FieldSettings = middleclass("FieldSettings")
 FieldSettings:include(Nameable)
 FieldSettings:include(Stringifiable)
@@ -50,13 +57,6 @@ function FieldSettings.static.from_options(options)
     options.count_range
   )
 end
-
----
--- @table instance
--- @tfield Size size
--- @tfield Vector2D initial_offset
--- @tfield number filling [0, 1]
--- @tfield Range count_range cell count range
 
 ---
 -- @function new

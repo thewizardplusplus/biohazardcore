@@ -10,15 +10,15 @@ local Nameable = require("luaserialization.nameable")
 local Stringifiable = require("luaserialization.stringifiable")
 local PlacedField = require("lualife.models.placedfield")
 
-local CellClassification = middleclass("CellClassification")
-CellClassification:include(Nameable)
-CellClassification:include(Stringifiable)
-
 ---
 -- @table instance
 -- @tfield lualife.models.PlacedField old
 -- @tfield lualife.models.PlacedField new
 -- @tfield lualife.models.PlacedField intersection
+
+local CellClassification = middleclass("CellClassification")
+CellClassification:include(Nameable)
+CellClassification:include(Stringifiable)
 
 ---
 -- @function cell_kinds

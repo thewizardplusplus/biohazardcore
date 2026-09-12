@@ -9,6 +9,11 @@ local Nameable = require("luaserialization.nameable")
 local Stringifiable = require("luaserialization.stringifiable")
 local FieldSettings = require("biohazardcore.models.fieldsettings")
 
+---
+-- @table instance
+-- @tfield FieldSettings field
+-- @tfield FieldSettings field_part
+
 local GameSettings = middleclass("GameSettings")
 GameSettings:include(Nameable)
 GameSettings:include(Stringifiable)
@@ -41,11 +46,6 @@ function GameSettings.static.from_options(options)
 
   return GameSettings:new(options.field, options.field_part)
 end
-
----
--- @table instance
--- @tfield FieldSettings field
--- @tfield FieldSettings field_part
 
 ---
 -- @function new
