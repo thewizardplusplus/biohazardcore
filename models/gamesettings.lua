@@ -19,18 +19,13 @@ GameSettings:include(Stringifiable)
 -- @treturn tab JSON Schema for this class
 --   (see the [luaserialization](https://github.com/thewizardplusplus/luaserialization) library)
 function GameSettings.static.schema()
-  local field_settings_schema = FieldSettings.schema()
-  local definitions = field_settings_schema.definitions
-  field_settings_schema.definitions = nil
-
   return {
     type = "object",
     required = {"field", "field_part"},
     properties = {
-      field = field_settings_schema,
-      field_part = field_settings_schema,
+      field = FieldSettings.schema(),
+      field_part = FieldSettings.schema(),
     },
-    definitions = definitions,
   }
 end
 
