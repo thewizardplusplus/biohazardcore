@@ -15,12 +15,6 @@ CellClassification:include(Nameable)
 CellClassification:include(Stringifiable)
 
 ---
--- @table instance
--- @tfield lualife.models.PlacedField old
--- @tfield lualife.models.PlacedField new
--- @tfield lualife.models.PlacedField intersection
-
----
 -- @function cell_kinds
 -- @static
 -- @treturn {string,...} array with all cell kinds
@@ -36,6 +30,12 @@ end
 function CellClassification.static.is_cell_kind(cell_kind)
   return checks.is_enumeration(cell_kind, CellClassification.cell_kinds())
 end
+
+---
+-- @table instance
+-- @tfield lualife.models.PlacedField old
+-- @tfield lualife.models.PlacedField new
+-- @tfield lualife.models.PlacedField intersection
 
 ---
 -- @function new
