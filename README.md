@@ -69,8 +69,9 @@ $ luarocks make
 `biohazardcore.Game`:
 
 ```lua
-local Size = require("lualife.models.size")
-local Point = require("lualife.models.point")
+local Vector2D = require("luamath.vector2d")
+local Size = require("luamath.models.size")
+local Range = require("luamath.models.range")
 local FieldSettings = require("biohazardcore.models.fieldsettings")
 local GameSettings = require("biohazardcore.models.gamesettings")
 local Game = require("biohazardcore.game")
@@ -78,8 +79,8 @@ local Game = require("biohazardcore.game")
 math.randomseed(os.time())
 
 local game = Game:new(GameSettings:new(
-  FieldSettings:new(Size:new(11, 11), Point:new(0, 0), 0.4),
-  FieldSettings:new(Size:new(3, 3), Point:new(4, 4), 0.5, 5, 5)
+  FieldSettings:new(Size:new(11, 11), Vector2D:new(0, 0), 0.4),
+  FieldSettings:new(Size:new(3, 3), Vector2D:new(4, 4), 0.5, Range:new(5, 5))
 ))
 local counter = 0
 repeat
@@ -87,16 +88,16 @@ repeat
   local action_description
   if action == 0 then
     action_description = "move left"
-    game:move(Point:new(-1, 0))
+    game:move(Vector2D:new(-1, 0))
   elseif action == 1 then
     action_description = "move right"
-    game:move(Point:new(1, 0))
+    game:move(Vector2D:new(1, 0))
   elseif action == 2 then
     action_description = "move top"
-    game:move(Point:new(0, -1))
+    game:move(Vector2D:new(0, -1))
   elseif action == 3 then
     action_description = "move bottom"
-    game:move(Point:new(0, 1))
+    game:move(Vector2D:new(0, 1))
   else
     action_description = "rotate"
     game:rotate()
@@ -112,8 +113,8 @@ until unioned
 
 ```lua
 local assertions = require("luatypechecks.assertions")
-local Size = require("lualife.models.size")
-local Point = require("lualife.models.point")
+local Vector2D = require("luamath.vector2d")
+local Size = require("luamath.models.size")
 local PlacedField = require("lualife.models.placedfield")
 local FieldSettings = require("biohazardcore.models.fieldsettings")
 local GameSettings = require("biohazardcore.models.gamesettings")
@@ -123,12 +124,12 @@ local function print_field(field)
   assertions.is_instance(field, PlacedField)
 
   field:map(function(point, contains)
-    assertions.is_instance(point, Point)
+    assertions.is_instance(point, Vector2D)
     assertions.is_boolean(contains)
 
     io.write(contains and "O" or ".")
 
-    if point.x - field.offset.x == field.size.width - 1 then
+    if point.x - field:offset().x == field.size.width - 1 then
       io.write("\n")
     end
   end)
@@ -142,16 +143,16 @@ local game = ClassifiedGame:new(GameSettings:new(
 ))
 
 game._field = PlacedField:new(Size:new(3, 3))
-game._field:set(Point:new(0, 0))
-game._field:set(Point:new(0, 1))
-game._field:set(Point:new(0, 2))
+game._field:set(Vector2D:new(0, 0))
+game._field:set(Vector2D:new(0, 1))
+game._field:set(Vector2D:new(0, 2))
 
 game._field_part = PlacedField:new(Size:new(3, 3))
-game._field_part:set(Point:new(1, 0))
-game._field_part:set(Point:new(2, 1))
-game._field_part:set(Point:new(0, 2))
-game._field_part:set(Point:new(1, 2))
-game._field_part:set(Point:new(2, 2))
+game._field_part:set(Vector2D:new(1, 0))
+game._field_part:set(Vector2D:new(2, 1))
+game._field_part:set(Vector2D:new(0, 2))
+game._field_part:set(Vector2D:new(1, 2))
+game._field_part:set(Vector2D:new(2, 2))
 
 local classification = game:classify_cells()
 for cell_kind, cells in pairs(classification) do
