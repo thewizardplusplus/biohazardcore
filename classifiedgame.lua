@@ -5,12 +5,39 @@
 
 local middleclass = require("middleclass")
 local assertions = require("luatypechecks.assertions")
+local PlacedField = require("lualife.models.placedfield")
 local GameSettings = require("biohazardcore.models.gamesettings")
 local CellClassification = require("biohazardcore.models.cellclassification")
-local sets = require("lualife.sets")
 local Game = require("biohazardcore.game")
+local sets = require("lualife.sets")
 
 local ClassifiedGame = middleclass("ClassifiedGame", Game)
+
+---
+-- @function schema
+-- @static
+-- @treturn tab JSON Schema for this class
+--   (see the [luaserialization](https://github.com/thewizardplusplus/luaserialization) library)
+
+---
+-- @function from_options
+-- @static
+-- @tparam tab options constructor options conforming to the JSON Schema
+--   returned by @{ClassifiedGame.schema|ClassifiedGame.schema()}
+--   (see the [luaserialization](https://github.com/thewizardplusplus/luaserialization) library)
+-- @treturn ClassifiedGame
+function ClassifiedGame.static.from_options(options)
+  assertions.is_table(options)
+
+  local game = ClassifiedGame:allocate()
+  game.settings =
+    GameSettings:new(options.settings.field, options.settings.field_part)
+  game._field = PlacedField.place(options.field, options.field:offset())
+  game._field_part =
+    PlacedField.place(options.field_part, options.field_part:offset())
+
+  return game
+end
 
 ---
 -- @table instance

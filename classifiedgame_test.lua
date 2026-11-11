@@ -1,8 +1,10 @@
 local luaunit = require("luaunit")
 local checks = require("luatypechecks.checks")
+local json = require("luaserialization.json")
 local Vector2D = require("luamath.vector2d")
 local Size = require("luamath.models.size")
 local Range = require("luamath.models.range")
+local BoundingBox = require("luamath.models.boundingbox")
 local PlacedField = require("lualife.models.placedfield")
 local FieldSettings = require("biohazardcore.models.fieldsettings")
 local GameSettings = require("biohazardcore.models.gamesettings")
@@ -11,6 +13,237 @@ local ClassifiedGame = require("biohazardcore.classifiedgame")
 
 -- luacheck: globals TestClassifiedGame
 TestClassifiedGame = {}
+
+function TestClassifiedGame.test_from_json_success()
+  local game, err = json.from_json(
+    [=[{
+      "__name": "ClassifiedGame",
+      "settings": {
+        "__name": "GameSettings",
+        "field": {
+          "__name": "FieldSettings",
+          "size": { "__name": "Size", "width": 5, "height": 12 },
+          "initial_offset": { "__name": "Vector2D", "x": 23, "y": 42 },
+          "filling": 0.1,
+          "count_range": { "__name": "Range", "min": 2, "max": 3 }
+        },
+        "field_part": {
+          "__name": "FieldSettings",
+          "size": { "__name": "Size", "width": 6, "height": 13 },
+          "initial_offset": { "__name": "Vector2D", "x": 24, "y": 43 },
+          "filling": 0.2,
+          "count_range": { "__name": "Range", "min": 4, "max": 5 }
+        }
+      },
+      "field": {
+        "__name": "PlacedField",
+        "size": { "__name": "Size", "width": 3, "height": 3 },
+        "bounds": {
+          "__name": "BoundingBox",
+          "min": { "__name": "Vector2D", "x": 23, "y": 42 },
+          "max": { "__name": "Vector2D", "x": 25, "y": 44 }
+        },
+        "local_bounds": {
+          "__name": "BoundingBox",
+          "min": { "__name": "Vector2D", "x": 0, "y": 0 },
+          "max": { "__name": "Vector2D", "x": 2, "y": 2 }
+        },
+        "cells": [{ "__name": "Vector2D", "x": 24, "y": 43 }]
+      },
+      "field_part": {
+        "__name": "PlacedField",
+        "size": { "__name": "Size", "width": 3, "height": 3 },
+        "bounds": {
+          "__name": "BoundingBox",
+          "min": { "__name": "Vector2D", "x": 24, "y": 43 },
+          "max": { "__name": "Vector2D", "x": 26, "y": 45 }
+        },
+        "local_bounds": {
+          "__name": "BoundingBox",
+          "min": { "__name": "Vector2D", "x": 0, "y": 0 },
+          "max": { "__name": "Vector2D", "x": 2, "y": 2 }
+        },
+        "cells": [{ "__name": "Vector2D", "x": 26, "y": 45 }]
+      }
+    }]=],
+    ClassifiedGame.schema(),
+    {
+      Vector2D = Vector2D.from_options,
+      Size = Size.from_options,
+      Range = Range.from_options,
+      BoundingBox = BoundingBox.from_options,
+      PlacedField = PlacedField.from_options,
+      FieldSettings = FieldSettings.from_options,
+      GameSettings = GameSettings.from_options,
+      ClassifiedGame = ClassifiedGame.from_options,
+    }
+  )
+
+  luaunit.assert_is_table(game)
+  luaunit.assert_is_true(checks.is_instance(game, ClassifiedGame))
+
+  local want_settings = GameSettings:new(
+    FieldSettings:new(
+      Size:new(5, 12), Vector2D:new(23, 42), 0.1, Range:new(2, 3)
+    ),
+    FieldSettings:new(
+      Size:new(6, 13), Vector2D:new(24, 43), 0.2, Range:new(4, 5)
+    )
+  )
+
+  luaunit.assert_is_true(checks.is_instance(game.settings, GameSettings))
+  luaunit.assert_equals(game.settings, want_settings)
+
+  local want_field = PlacedField:new(Size:new(3, 3), Vector2D:new(23, 42))
+  want_field:set(Vector2D:new(24, 43))
+
+  luaunit.assert_is_true(checks.is_instance(game._field, PlacedField))
+  luaunit.assert_equals(game._field, want_field)
+
+  local want_field_part = PlacedField:new(Size:new(3, 3), Vector2D:new(24, 43))
+  want_field_part:set(Vector2D:new(26, 45))
+
+  luaunit.assert_is_true(checks.is_instance(game._field_part, PlacedField))
+  luaunit.assert_equals(game._field_part, want_field_part)
+
+  luaunit.assert_is_nil(err)
+end
+
+function TestClassifiedGame.test_from_json_error()
+  local game, err = json.from_json(
+    [=[{
+      "__name": "ClassifiedGame",
+      "settings": {
+        "__name": "GameSettings",
+        "field": {
+          "__name": "FieldSettings",
+          "size": { "__name": "Size", "width": 5, "height": 12 },
+          "initial_offset": { "__name": "Vector2D", "x": 23, "y": 42 },
+          "filling": 0.1,
+          "count_range": { "__name": "Range", "min": 2, "max": 3 }
+        },
+        "field_part": {
+          "__name": "FieldSettings",
+          "size": { "__name": "Size", "width": 6, "height": 13 },
+          "initial_offset": { "__name": "Vector2D", "x": 24, "y": 43 },
+          "filling": 0.2,
+          "count_range": { "__name": "Range", "min": 4, "max": 5 }
+        }
+      },
+      "field": {
+        "__name": "PlacedField",
+        "size": { "__name": "Size", "width": 3, "height": 3 },
+        "bounds": {
+          "__name": "BoundingBox",
+          "min": { "__name": "Vector2D", "x": 23, "y": 42 },
+          "max": { "__name": "Vector2D", "x": 25, "y": 44 }
+        },
+        "local_bounds": {
+          "__name": "BoundingBox",
+          "min": { "__name": "Vector2D", "x": 0, "y": 0 },
+          "max": { "__name": "Vector2D", "x": 2, "y": 2 }
+        },
+        "cells": [{ "__name": "Vector2D", "x": 24, "y": 43 }]
+      },
+      "field_part": {
+        "__name": "PlacedField",
+        "size": { "__name": "Size", "width": "invalid", "height": 3 },
+        "bounds": {
+          "__name": "BoundingBox",
+          "min": { "__name": "Vector2D", "x": 24, "y": 43 },
+          "max": { "__name": "Vector2D", "x": 26, "y": 45 }
+        },
+        "local_bounds": {
+          "__name": "BoundingBox",
+          "min": { "__name": "Vector2D", "x": 0, "y": 0 },
+          "max": { "__name": "Vector2D", "x": 2, "y": 2 }
+        },
+        "cells": [{ "__name": "Vector2D", "x": 26, "y": 45 }]
+      }
+    }]=],
+    ClassifiedGame.schema(),
+    {
+      Vector2D = Vector2D.from_options,
+      Size = Size.from_options,
+      Range = Range.from_options,
+      BoundingBox = BoundingBox.from_options,
+      PlacedField = PlacedField.from_options,
+      FieldSettings = FieldSettings.from_options,
+      GameSettings = GameSettings.from_options,
+      ClassifiedGame = ClassifiedGame.from_options,
+    }
+  )
+
+  luaunit.assert_is_nil(game)
+
+  luaunit.assert_is_string(err)
+  luaunit.assert_str_matches(
+    err,
+    "^invalid data: " ..
+      [[property "field_part" validation failed: ]] ..
+      [[property "size" validation failed: ]] ..
+      [[property "width" validation failed: ]] ..
+      "wrong type: " ..
+      "expected number, got string$"
+  )
+end
+
+function TestClassifiedGame.test_from_options_copies_inputs()
+  local options = {
+    settings = GameSettings:new(
+      FieldSettings:new(
+        Size:new(5, 12), Vector2D:new(23, 42), 0.1, Range:new(2, 3)
+      ),
+      FieldSettings:new(
+        Size:new(6, 13), Vector2D:new(24, 43), 0.2, Range:new(4, 5)
+      )
+    ),
+    field = PlacedField:new(Size:new(3, 3), Vector2D:new(23, 42)),
+    field_part = PlacedField:new(Size:new(3, 3), Vector2D:new(24, 43)),
+  }
+  options.field:set(Vector2D:new(24, 43))
+  options.field_part:set(Vector2D:new(26, 45))
+
+  local game = ClassifiedGame.from_options(options)
+
+  options.settings.field.size.height = 20
+  options.settings.field_part.initial_offset.y = 50
+
+  options.field:set(Vector2D:new(24, 44))
+  options.field.size.height = 4
+  options.field.bounds.min.y = 50
+
+  options.field_part:set(Vector2D:new(25, 45))
+  options.field_part.size.height = 4
+  options.field_part.bounds.min.y = 50
+
+  luaunit.assert_is_table(game)
+  luaunit.assert_is_true(checks.is_instance(game, ClassifiedGame))
+
+  local want_settings = GameSettings:new(
+    FieldSettings:new(
+      Size:new(5, 12), Vector2D:new(23, 42), 0.1, Range:new(2, 3)
+    ),
+    FieldSettings:new(
+      Size:new(6, 13), Vector2D:new(24, 43), 0.2, Range:new(4, 5)
+    )
+  )
+
+  luaunit.assert_is_true(checks.is_instance(game.settings, GameSettings))
+  luaunit.assert_equals(game.settings, want_settings)
+
+  local want_field = PlacedField:new(Size:new(3, 3), Vector2D:new(23, 42))
+  want_field:set(Vector2D:new(24, 43))
+
+  luaunit.assert_is_true(checks.is_instance(game._field, PlacedField))
+  luaunit.assert_equals(game._field, want_field)
+
+  local want_field_part = PlacedField:new(Size:new(3, 3), Vector2D:new(24, 43))
+  want_field_part:set(Vector2D:new(26, 45))
+
+  luaunit.assert_is_true(checks.is_instance(game._field_part, PlacedField))
+  luaunit.assert_equals(game._field_part, want_field_part)
+end
 
 function TestClassifiedGame.test_new()
   math.randomseed(1)
