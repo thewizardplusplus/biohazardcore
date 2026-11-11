@@ -1,7 +1,9 @@
 local luaunit = require("luaunit")
 local checks = require("luatypechecks.checks")
+local json = require("luaserialization.json")
 local Vector2D = require("luamath.vector2d")
 local Size = require("luamath.models.size")
+local BoundingBox = require("luamath.models.boundingbox")
 local PlacedField = require("lualife.models.placedfield")
 local CellClassification = require("biohazardcore.models.cellclassification")
 
@@ -29,6 +31,218 @@ function TestCellClassification.test_is_cell_kind_true()
 
   luaunit.assert_is_boolean(result)
   luaunit.assert_true(result)
+end
+
+function TestCellClassification.test_from_json_success()
+  local classification, err = json.from_json(
+    [=[{
+      "__name": "CellClassification",
+      "old": {
+        "__name": "PlacedField",
+        "size": { "__name": "Size", "width": 3, "height": 3 },
+        "bounds": {
+          "__name": "BoundingBox",
+          "min": { "__name": "Vector2D", "x": 23, "y": 42 },
+          "max": { "__name": "Vector2D", "x": 25, "y": 44 }
+        },
+        "local_bounds": {
+          "__name": "BoundingBox",
+          "min": { "__name": "Vector2D", "x": 0, "y": 0 },
+          "max": { "__name": "Vector2D", "x": 2, "y": 2 }
+        },
+        "cells": [{ "__name": "Vector2D", "x": 24, "y": 43 }]
+      },
+      "new": {
+        "__name": "PlacedField",
+        "size": { "__name": "Size", "width": 3, "height": 3 },
+        "bounds": {
+          "__name": "BoundingBox",
+          "min": { "__name": "Vector2D", "x": 24, "y": 43 },
+          "max": { "__name": "Vector2D", "x": 26, "y": 45 }
+        },
+        "local_bounds": {
+          "__name": "BoundingBox",
+          "min": { "__name": "Vector2D", "x": 0, "y": 0 },
+          "max": { "__name": "Vector2D", "x": 2, "y": 2 }
+        },
+        "cells": [{ "__name": "Vector2D", "x": 26, "y": 45 }]
+      },
+      "intersection": {
+        "__name": "PlacedField",
+        "size": { "__name": "Size", "width": 3, "height": 3 },
+        "bounds": {
+          "__name": "BoundingBox",
+          "min": { "__name": "Vector2D", "x": 25, "y": 44 },
+          "max": { "__name": "Vector2D", "x": 27, "y": 46 }
+        },
+        "local_bounds": {
+          "__name": "BoundingBox",
+          "min": { "__name": "Vector2D", "x": 0, "y": 0 },
+          "max": { "__name": "Vector2D", "x": 2, "y": 2 }
+        },
+        "cells": [{ "__name": "Vector2D", "x": 25, "y": 44 }]
+      }
+    }]=],
+    CellClassification.schema(),
+    {
+      Vector2D = Vector2D.from_options,
+      Size = Size.from_options,
+      BoundingBox = BoundingBox.from_options,
+      PlacedField = PlacedField.from_options,
+      CellClassification = CellClassification.from_options,
+    }
+  )
+
+  luaunit.assert_is_table(classification)
+  luaunit.assert_is_true(checks.is_instance(classification, CellClassification))
+
+  local want_old = PlacedField:new(Size:new(3, 3), Vector2D:new(23, 42))
+  want_old:set(Vector2D:new(24, 43))
+
+  luaunit.assert_is_true(checks.is_instance(classification.old, PlacedField))
+  luaunit.assert_equals(classification.old, want_old)
+
+  local want_new = PlacedField:new(Size:new(3, 3), Vector2D:new(24, 43))
+  want_new:set(Vector2D:new(26, 45))
+
+  luaunit.assert_is_true(checks.is_instance(classification.new, PlacedField))
+  luaunit.assert_equals(classification.new, want_new)
+
+  local want_intersection =
+    PlacedField:new(Size:new(3, 3), Vector2D:new(25, 44))
+  want_intersection:set(Vector2D:new(25, 44))
+
+  luaunit.assert_is_true(checks.is_instance(
+    classification.intersection,
+    PlacedField
+  ))
+  luaunit.assert_equals(classification.intersection, want_intersection)
+
+  luaunit.assert_is_nil(err)
+end
+
+function TestCellClassification.test_from_json_error()
+  local classification, err = json.from_json(
+    [=[{
+      "__name": "CellClassification",
+      "old": {
+        "__name": "PlacedField",
+        "size": { "__name": "Size", "width": 3, "height": 3 },
+        "bounds": {
+          "__name": "BoundingBox",
+          "min": { "__name": "Vector2D", "x": 23, "y": 42 },
+          "max": { "__name": "Vector2D", "x": 25, "y": 44 }
+        },
+        "local_bounds": {
+          "__name": "BoundingBox",
+          "min": { "__name": "Vector2D", "x": 0, "y": 0 },
+          "max": { "__name": "Vector2D", "x": 2, "y": 2 }
+        },
+        "cells": [{ "__name": "Vector2D", "x": 24, "y": 43 }]
+      },
+      "new": {
+        "__name": "PlacedField",
+        "size": { "__name": "Size", "width": 3, "height": 3 },
+        "bounds": {
+          "__name": "BoundingBox",
+          "min": { "__name": "Vector2D", "x": 24, "y": 43 },
+          "max": { "__name": "Vector2D", "x": 26, "y": 45 }
+        },
+        "local_bounds": {
+          "__name": "BoundingBox",
+          "min": { "__name": "Vector2D", "x": 0, "y": 0 },
+          "max": { "__name": "Vector2D", "x": 2, "y": 2 }
+        },
+        "cells": [{ "__name": "Vector2D", "x": 26, "y": 45 }]
+      },
+      "intersection": {
+        "__name": "PlacedField",
+        "size": { "__name": "Size", "width": "invalid", "height": 3 },
+        "bounds": {
+          "__name": "BoundingBox",
+          "min": { "__name": "Vector2D", "x": 25, "y": 44 },
+          "max": { "__name": "Vector2D", "x": 27, "y": 46 }
+        },
+        "local_bounds": {
+          "__name": "BoundingBox",
+          "min": { "__name": "Vector2D", "x": 0, "y": 0 },
+          "max": { "__name": "Vector2D", "x": 2, "y": 2 }
+        },
+        "cells": [{ "__name": "Vector2D", "x": 25, "y": 44 }]
+      }
+    }]=],
+    CellClassification.schema(),
+    {
+      Vector2D = Vector2D.from_options,
+      Size = Size.from_options,
+      BoundingBox = BoundingBox.from_options,
+      PlacedField = PlacedField.from_options,
+      CellClassification = CellClassification.from_options,
+    }
+  )
+
+  luaunit.assert_is_nil(classification)
+
+  luaunit.assert_is_string(err)
+  luaunit.assert_str_matches(
+    err,
+    "^invalid data: " ..
+      [[property "intersection" validation failed: ]] ..
+      [[property "size" validation failed: ]] ..
+      [[property "width" validation failed: ]] ..
+      "wrong type: " ..
+      "expected number, got string$"
+  )
+end
+
+function TestCellClassification.test_from_options_copies_inputs()
+  local options = {
+    old = PlacedField:new(Size:new(3, 3), Vector2D:new(23, 42)),
+    new = PlacedField:new(Size:new(3, 3), Vector2D:new(24, 43)),
+    intersection = PlacedField:new(Size:new(3, 3), Vector2D:new(25, 44)),
+  }
+  options.old:set(Vector2D:new(24, 43))
+  options.new:set(Vector2D:new(26, 45))
+  options.intersection:set(Vector2D:new(25, 44))
+
+  local classification = CellClassification.from_options(options)
+
+  options.old:set(Vector2D:new(24, 44))
+  options.old.size.height = 4
+  options.old.bounds.min.y = 50
+
+  options.new:set(Vector2D:new(25, 45))
+  options.new.size.height = 4
+  options.new.bounds.min.y = 50
+
+  options.intersection:set(Vector2D:new(26, 46))
+  options.intersection.size.height = 4
+  options.intersection.bounds.min.y = 50
+
+  luaunit.assert_is_table(classification)
+  luaunit.assert_is_true(checks.is_instance(classification, CellClassification))
+
+  local want_old = PlacedField:new(Size:new(3, 3), Vector2D:new(23, 42))
+  want_old:set(Vector2D:new(24, 43))
+
+  luaunit.assert_is_true(checks.is_instance(classification.old, PlacedField))
+  luaunit.assert_equals(classification.old, want_old)
+
+  local want_new = PlacedField:new(Size:new(3, 3), Vector2D:new(24, 43))
+  want_new:set(Vector2D:new(26, 45))
+
+  luaunit.assert_is_true(checks.is_instance(classification.new, PlacedField))
+  luaunit.assert_equals(classification.new, want_new)
+
+  local want_intersection =
+    PlacedField:new(Size:new(3, 3), Vector2D:new(25, 44))
+  want_intersection:set(Vector2D:new(25, 44))
+
+  luaunit.assert_is_true(checks.is_instance(
+    classification.intersection,
+    PlacedField
+  ))
+  luaunit.assert_equals(classification.intersection, want_intersection)
 end
 
 function TestCellClassification.test_new()
