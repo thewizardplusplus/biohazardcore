@@ -20,6 +20,43 @@ Game:include(Nameable)
 Game:include(Stringifiable)
 
 ---
+-- @function schema
+-- @static
+-- @treturn tab JSON Schema for this class
+--   (see the [luaserialization](https://github.com/thewizardplusplus/luaserialization) library)
+function Game.static.schema()
+  return {
+    type = "object",
+    required = {"settings", "field", "field_part"},
+    properties = {
+      settings = GameSettings.schema(),
+      field = PlacedField.schema(),
+      field_part = PlacedField.schema(),
+    },
+  }
+end
+
+---
+-- @function from_options
+-- @static
+-- @tparam tab options constructor options conforming to the JSON Schema
+--   returned by @{Game.schema|Game.schema()}
+--   (see the [luaserialization](https://github.com/thewizardplusplus/luaserialization) library)
+-- @treturn Game
+function Game.static.from_options(options)
+  assertions.is_table(options)
+
+  local game = Game:allocate()
+  game.settings =
+    GameSettings:new(options.settings.field, options.settings.field_part)
+  game._field = PlacedField.place(options.field, options.field:offset())
+  game._field_part =
+    PlacedField.place(options.field_part, options.field_part:offset())
+
+  return game
+end
+
+---
 -- @table instance
 -- @tfield GameSettings settings
 -- @tfield lualife.models.PlacedField _field
