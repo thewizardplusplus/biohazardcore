@@ -32,6 +32,36 @@ function CellClassification.static.is_cell_kind(cell_kind)
 end
 
 ---
+-- @function schema
+-- @static
+-- @treturn tab JSON Schema for this class
+--   (see the [luaserialization](https://github.com/thewizardplusplus/luaserialization) library)
+function CellClassification.static.schema()
+  return {
+    type = "object",
+    required = {"old", "new", "intersection"},
+    properties = {
+      old = PlacedField.schema(),
+      new = PlacedField.schema(),
+      intersection = PlacedField.schema(),
+    },
+  }
+end
+
+---
+-- @function from_options
+-- @static
+-- @tparam tab options constructor options conforming to the JSON Schema
+--   returned by @{CellClassification.schema|CellClassification.schema()}
+--   (see the [luaserialization](https://github.com/thewizardplusplus/luaserialization) library)
+-- @treturn CellClassification
+function CellClassification.static.from_options(options)
+  assertions.is_table(options)
+
+  return CellClassification:new(options.old, options.new, options.intersection)
+end
+
+---
 -- @table instance
 -- @tfield lualife.models.PlacedField old
 -- @tfield lualife.models.PlacedField new
