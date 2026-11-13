@@ -1,6 +1,7 @@
 local luaunit = require("luaunit")
 
 for _, module in ipairs({
+  "benchlocalutils",
   "factory",
   "game",
   "classifiedgame",

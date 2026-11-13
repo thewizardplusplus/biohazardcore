@@ -7,6 +7,7 @@ full_description = [[
   For more details, see topic @{README.md}.
 ]]
 file = {
+  "benchlocalutils.lua",
   "factory.lua",
   "game.lua",
   "classifiedgame.lua",

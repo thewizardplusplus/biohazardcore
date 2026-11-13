@@ -21,10 +21,14 @@ dependencies = {
 }
 test_dependencies = {
   "luaunit >= 3.4, < 4.0",
+  "luamark >= 1.1.2, < 2.0",
+  "chronos >= 0.2, < 1.0",
 }
 build = {
   type = "builtin",
   modules = {
+    ["biohazardcore.benchlocalutils"] = "benchlocalutils.lua",
+    ["biohazardcore.benchlocalutils_test"] = "benchlocalutils_test.lua",
     ["biohazardcore.factory"] = "factory.lua",
     ["biohazardcore.factory_test"] = "factory_test.lua",
     ["biohazardcore.game"] = "game.lua",
