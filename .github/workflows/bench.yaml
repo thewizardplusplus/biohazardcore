@@ -1,0 +1,21 @@
+name: bench
+on: [push]
+jobs:
+  bench:
+    runs-on: ubuntu-22.04
+    strategy:
+      matrix:
+        luaVersion: ["5.1", "5.2", "5.3", "5.4", "5.5", "luajit"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: leafo/gh-actions-lua@v13
+        with:
+          luaVersion: ${{ matrix.luaVersion }}
+      - uses: leafo/gh-actions-luarocks@v6
+      - name: build
+        run: luarocks make
+      - name: bench
+        env:
+          BENCH_ROUNDS: "1"
+        run: luarocks test -- --bench
+    timeout-minutes: 60
