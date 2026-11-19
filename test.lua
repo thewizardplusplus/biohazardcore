@@ -16,6 +16,7 @@ end
 if benchutils.init() then
   for _, module in ipairs({
     "factory",
+    "game",
     "models.fieldsettings",
     "models.gamesettings",
     "models.cellclassification",
