@@ -1,6 +1,6 @@
 rockspec_format = "3.0"
 package = "biohazardcore"
-version = "1.3-1"
+version = "1.3.1-1"
 description = {
   summary = "The library that implements the business logic of the puzzle game inspired by Conway's Game of Life and various block games.",
   license = "MIT",
@@ -9,7 +9,7 @@ description = {
 }
 source = {
   url = "git+https://github.com/thewizardplusplus/biohazardcore.git",
-  tag = "v1.3",
+  tag = "v1.3.1",
 }
 dependencies = {
   "lua >= 5.1",
