@@ -37,10 +37,13 @@ build = {
     ["biohazardcore.classifiedgame_test"] = "classifiedgame_test.lua",
     ["biohazardcore.models.fieldsettings"] = "models/fieldsettings.lua",
     ["biohazardcore.models.fieldsettings_test"] = "models/fieldsettings_test.lua",
+    ["biohazardcore.models.fieldsettings_bench"] = "models/fieldsettings_bench.lua",
     ["biohazardcore.models.gamesettings"] = "models/gamesettings.lua",
     ["biohazardcore.models.gamesettings_test"] = "models/gamesettings_test.lua",
+    ["biohazardcore.models.gamesettings_bench"] = "models/gamesettings_bench.lua",
     ["biohazardcore.models.cellclassification"] = "models/cellclassification.lua",
     ["biohazardcore.models.cellclassification_test"] = "models/cellclassification_test.lua",
+    ["biohazardcore.models.cellclassification_bench"] = "models/cellclassification_bench.lua",
   },
   copy_directories = {
     "doc",
