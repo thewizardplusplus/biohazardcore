@@ -37,6 +37,7 @@ build = {
     ["biohazardcore.game_bench"] = "game_bench.lua",
     ["biohazardcore.classifiedgame"] = "classifiedgame.lua",
     ["biohazardcore.classifiedgame_test"] = "classifiedgame_test.lua",
+    ["biohazardcore.classifiedgame_bench"] = "classifiedgame_bench.lua",
     ["biohazardcore.models.fieldsettings"] = "models/fieldsettings.lua",
     ["biohazardcore.models.fieldsettings_test"] = "models/fieldsettings_test.lua",
     ["biohazardcore.models.fieldsettings_bench"] = "models/fieldsettings_bench.lua",
