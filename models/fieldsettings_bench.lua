@@ -41,6 +41,6 @@ function TestFieldSettingsBench.test_tostring()
     field_settings.size.width,
     field_settings.size.height
   ), function()
-    return tostring(field_settings.field)
+    return tostring(field_settings)
   end)
 end
