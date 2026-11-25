@@ -11,7 +11,12 @@ end
 
 function TestFactoryBench.test_create_field()
   for _, size in ipairs(benchlocalutils.SIZES) do
-    local field_settings = benchlocalutils.new_field_settings(size)
+    local field_settings = benchlocalutils.new_field_settings(
+      size,
+      benchlocalutils.FIELD_TARGET_FILLING,
+      benchlocalutils.FIELD_MIN_ALIVE_RATIO,
+      benchlocalutils.FIELD_MAX_ALIVE_RATIO
+    )
 
     math.randomseed(1)
 

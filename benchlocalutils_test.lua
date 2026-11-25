@@ -6,6 +6,7 @@ local Range = require("luamath.models.range")
 local BoundingBox = require("luamath.models.boundingbox")
 local Field = require("lualife.models.field")
 local PlacedField = require("lualife.models.placedfield")
+local sets = require("lualife.sets")
 local benchlocalutils = require("biohazardcore.benchlocalutils")
 local FieldSettings = require("biohazardcore.models.fieldsettings")
 local GameSettings = require("biohazardcore.models.gamesettings")
@@ -123,6 +124,24 @@ function TestBenchlocalutils.test_collect_points_with_defaults()
   })
 end
 
+function TestBenchlocalutils.test_new_field_settings()
+  local field_settings = benchlocalutils.new_field_settings(
+    10,
+    0.3, -- target filling
+    0.2, -- minimum alive ratio
+    0.4, -- maximum alive ratio
+    Vector2D:new(1, 2) -- initial offset
+  )
+
+  luaunit.assert_true(checks.is_instance(field_settings, FieldSettings))
+  luaunit.assert_equals(field_settings, FieldSettings:new(
+    Size:new(10, 10),
+    Vector2D:new(1, 2),
+    0.3,
+    Range:new(20, 40)
+  ))
+end
+
 function TestBenchlocalutils.test_new_game_settings()
   local game_settings = benchlocalutils.new_game_settings()
 
@@ -136,29 +155,38 @@ function TestBenchlocalutils.test_new_game_settings()
     ),
     FieldSettings:new(
       Size:new(3, 3),
-      Vector2D.ZERO,
+      Vector2D:new(23, 23),
       0.5,
-      Range:new(5, 5)
+      Range:new(4, 5)
     )
   ))
 end
 
 function TestBenchlocalutils.test_new_field_part()
-  local field = benchlocalutils.new_field_part(Vector2D:new(10, 20))
+  local field = benchlocalutils.new_placed_field(10, 5, 0, 0)
+  local field_part_settings = benchlocalutils.new_field_settings(
+    5,
+    0.5, -- target filling
+    0.4, -- minimum alive ratio
+    0.6, -- maximum alive ratio
+    Vector2D:new(2, 3) -- initial offset
+  )
+  local field_part =
+    benchlocalutils.new_field_part(field, field_part_settings)
 
-  luaunit.assert_true(checks.is_instance(field, PlacedField))
-  luaunit.assert_equals(field.size, Size:new(3, 3))
-  luaunit.assert_equals(field:offset(), Vector2D:new(10, 20))
-  luaunit.assert_equals(field:count(), 5)
-  for _, point in ipairs({
-    Vector2D:new(11, 20),
-    Vector2D:new(12, 20),
-    Vector2D:new(10, 21),
-    Vector2D:new(11, 21),
-    Vector2D:new(10, 22),
-  }) do
-    luaunit.assert_true(field:contains(point))
-  end
+  luaunit.assert_true(checks.is_instance(field_part, PlacedField))
+  luaunit.assert_equals(field_part.size, Size:new(5, 5))
+  luaunit.assert_equals(field_part:offset(), Vector2D:new(2, 3))
+  luaunit.assert_equals(field_part:count(), 13)
+  luaunit.assert_true(field_part:fits(field))
+  luaunit.assert_equals(sets.intersection(field, field_part):count(), 0)
+  luaunit.assert_true(
+    field_part_settings.count_range:contains(field_part:count())
+  )
+  luaunit.assert_equals(
+    field_part,
+    benchlocalutils.new_field_part(field, field_part_settings)
+  )
 end
 
 function TestBenchlocalutils.test_new_game_fixture()
@@ -169,6 +197,14 @@ function TestBenchlocalutils.test_new_game_fixture()
   luaunit.assert_equals(game._field.size, Size:new(50, 50))
   luaunit.assert_equals(game._field:count(), 500)
   luaunit.assert_equals(game._field_part.size, Size:new(3, 3))
-  luaunit.assert_equals(game._field_part:offset(), Vector2D:new(10, 10))
+  luaunit.assert_equals(game._field_part:offset(), Vector2D:new(23, 23))
   luaunit.assert_equals(game._field_part:count(), 5)
+  luaunit.assert_true(game._field_part:fits(game._field))
+  luaunit.assert_equals(
+    sets.intersection(game._field, game._field_part):count(),
+    0
+  )
+  luaunit.assert_true(
+    game.settings.field_part.count_range:contains(game._field_part:count())
+  )
 end

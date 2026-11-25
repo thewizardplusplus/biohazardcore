@@ -15,7 +15,12 @@ end
 
 function TestFieldSettingsBench.test_from_json()
   local field_settings =
-    benchlocalutils.new_field_settings(benchlocalutils.FIELD_SIZE)
+    benchlocalutils.new_field_settings(
+      benchlocalutils.FIELD_SIZE,
+      benchlocalutils.FIELD_TARGET_FILLING,
+      benchlocalutils.FIELD_MIN_ALIVE_RATIO,
+      benchlocalutils.FIELD_MAX_ALIVE_RATIO
+    )
   local text = assert(json.to_json(field_settings))
 
   benchutils.run(string.format(
@@ -34,7 +39,12 @@ end
 
 function TestFieldSettingsBench.test_tostring()
   local field_settings =
-    benchlocalutils.new_field_settings(benchlocalutils.FIELD_SIZE)
+    benchlocalutils.new_field_settings(
+      benchlocalutils.FIELD_SIZE,
+      benchlocalutils.FIELD_TARGET_FILLING,
+      benchlocalutils.FIELD_MIN_ALIVE_RATIO,
+      benchlocalutils.FIELD_MAX_ALIVE_RATIO
+    )
 
   benchutils.run(string.format(
     "tostring(FieldSettings) (%dx%d)",
