@@ -14,13 +14,14 @@ function TestFieldSettingsBench.setupClass()
 end
 
 function TestFieldSettingsBench.test_from_json()
-  local settings = benchlocalutils.new_settings()
-  local text = assert(json.to_json(settings.field))
+  local field_settings =
+    benchlocalutils.new_field_settings(benchlocalutils.FIELD_SIZE)
+  local text = assert(json.to_json(field_settings))
 
   benchutils.run(string.format(
     "json.from_json(FieldSettings) (%dx%d)",
-    settings.field.size.width,
-    settings.field.size.height
+    field_settings.size.width,
+    field_settings.size.height
   ), function()
     return json.from_json(text, FieldSettings.schema(), {
       Vector2D = Vector2D.from_options,
@@ -32,13 +33,14 @@ function TestFieldSettingsBench.test_from_json()
 end
 
 function TestFieldSettingsBench.test_tostring()
-  local settings = benchlocalutils.new_settings()
+  local field_settings =
+    benchlocalutils.new_field_settings(benchlocalutils.FIELD_SIZE)
 
   benchutils.run(string.format(
     "tostring(FieldSettings) (%dx%d)",
-    settings.field.size.width,
-    settings.field.size.height
+    field_settings.size.width,
+    field_settings.size.height
   ), function()
-    return tostring(settings.field)
+    return tostring(field_settings.field)
   end)
 end

@@ -15,15 +15,15 @@ function TestGameSettingsBench.setupClass()
 end
 
 function TestGameSettingsBench.test_from_json()
-  local settings = benchlocalutils.new_settings()
-  local text = assert(json.to_json(settings))
+  local game_settings = benchlocalutils.new_game_settings()
+  local text = assert(json.to_json(game_settings))
 
   benchutils.run(string.format(
     "json.from_json(GameSettings) (%dx%d/%dx%d)",
-    settings.field.size.width,
-    settings.field.size.height,
-    settings.field_part.size.width,
-    settings.field_part.size.height
+    game_settings.field.size.width,
+    game_settings.field.size.height,
+    game_settings.field_part.size.width,
+    game_settings.field_part.size.height
   ), function()
     return json.from_json(text, GameSettings.schema(), {
       Vector2D = Vector2D.from_options,
@@ -36,15 +36,15 @@ function TestGameSettingsBench.test_from_json()
 end
 
 function TestGameSettingsBench.test_tostring()
-  local settings = benchlocalutils.new_settings()
+  local game_settings = benchlocalutils.new_game_settings()
 
   benchutils.run(string.format(
     "tostring(GameSettings) (%dx%d/%dx%d)",
-    settings.field.size.width,
-    settings.field.size.height,
-    settings.field_part.size.width,
-    settings.field_part.size.height
+    game_settings.field.size.width,
+    game_settings.field.size.height,
+    game_settings.field_part.size.width,
+    game_settings.field_part.size.height
   ), function()
-    return tostring(settings)
+    return tostring(game_settings)
   end)
 end
