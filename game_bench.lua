@@ -60,18 +60,18 @@ function TestGameBench.test_tostring()
 end
 
 function TestGameBench.test_new()
-  local settings = benchlocalutils.new_settings()
+  local game_settings = benchlocalutils.new_game_settings()
 
   benchutils.run(string.format(
     "Game:new() (%dx%d/%dx%d, filling: %g%%+%g%%)",
-    settings.field.size.width,
-    settings.field.size.height,
-    settings.field_part.size.width,
-    settings.field_part.size.height,
-    100 * settings.field.filling,
-    100 * settings.field_part.filling
+    game_settings.field.size.width,
+    game_settings.field.size.height,
+    game_settings.field_part.size.width,
+    game_settings.field_part.size.height,
+    100 * game_settings.field.filling,
+    100 * game_settings.field_part.filling
   ), function()
-    return Game:new(settings)
+    return Game:new(game_settings)
   end)
 end
 
