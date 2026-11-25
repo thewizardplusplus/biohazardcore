@@ -123,11 +123,11 @@ function TestBenchlocalutils.test_collect_points_with_defaults()
   })
 end
 
-function TestBenchlocalutils.test_new_settings()
-  local settings = benchlocalutils.new_settings()
+function TestBenchlocalutils.test_new_game_settings()
+  local game_settings = benchlocalutils.new_game_settings()
 
-  luaunit.assert_true(checks.is_instance(settings, GameSettings))
-  luaunit.assert_equals(settings, GameSettings:new(
+  luaunit.assert_true(checks.is_instance(game_settings, GameSettings))
+  luaunit.assert_equals(game_settings, GameSettings:new(
     FieldSettings:new(
       Size:new(50, 50),
       Vector2D.ZERO,
@@ -165,7 +165,7 @@ function TestBenchlocalutils.test_new_game_fixture()
   local game = benchlocalutils.new_game_fixture(Game)
 
   luaunit.assert_true(checks.is_instance(game, Game))
-  luaunit.assert_equals(game.settings, benchlocalutils.new_settings())
+  luaunit.assert_equals(game.settings, benchlocalutils.new_game_settings())
   luaunit.assert_equals(game._field.size, Size:new(50, 50))
   luaunit.assert_equals(game._field:count(), 500)
   luaunit.assert_equals(game._field_part.size, Size:new(3, 3))
