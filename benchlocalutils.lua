@@ -20,7 +20,7 @@ local benchlocalutils = setmetatable({}, { __index = basebenchlocalutils })
 
 ---
 -- @table module
--- @tfield number FIELD_SIZE ???
+-- @tfield int FIELD_SIZE ???
 -- @tfield number FIELD_TARGET_FILLING ???
 -- @tfield number FIELD_MIN_ALIVE_RATIO ???
 -- @tfield number FIELD_MAX_ALIVE_RATIO ???
